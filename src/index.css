@@ -39,11 +39,55 @@
   .valuation-hero-overlay { width: 40% !important; background-color: rgba(36, 76, 59, 0.22) !important; }
   .valuation-hero-divider { right: 40% !important; }
   .valuation-hero h1 { font-weight: 650 !important; line-height: 1.08 !important; }
+  .valuation-hero h1 { letter-spacing: -1.1px !important; }
+  .valuation-hero p { font-weight: 400 !important; }
   .valuation-hero-cta { border-radius: 11px !important; min-height: 56px !important; padding-inline: 24px !important; transition: transform 160ms ease, filter 160ms ease; }
   .valuation-hero-cta:hover { transform: translateY(-2px); filter: brightness(1.04); }
   .valuation-context { border-radius: 11px !important; backdrop-filter: none; }
   .material-presets { overflow-x: auto; flex-wrap: nowrap !important; padding-bottom: 3px; }
   .material-presets button { border-radius: 11px !important; white-space: nowrap; }
+  .header-brand-lockup { padding-left: 0 !important; }
+  .header-brand-mark {
+    position: relative;
+    width: 35px;
+    height: 35px;
+    border-radius: 10px;
+    font-family: "Satoshi", "DM Sans", "Segoe UI", sans-serif;
+    font-size: 12px;
+    font-weight: 650;
+    letter-spacing: -0.05em;
+  }
+  .header-brand-mark::after {
+    content: "";
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    width: 5px;
+    height: 5px;
+    border-radius: 2px;
+    background: #D7F06B;
+  }
+  .header-brand-name {
+    color: #17211D;
+    font-family: "Satoshi", "DM Sans", "Segoe UI", sans-serif;
+    font-size: 20px;
+    font-weight: 650;
+    letter-spacing: -0.25px;
+    line-height: 1.15;
+  }
+  .header-brand-tagline {
+    margin-top: 5px;
+    margin-left: 47px;
+    color: #617067;
+    font-family: "DM Sans", "Segoe UI", sans-serif;
+    font-size: 13px !important;
+    font-weight: 400;
+    line-height: 1.35;
+    letter-spacing: normal;
+  }
+  .header-nav-row .nav-link { font-family: "DM Sans", "Segoe UI", sans-serif; font-size: 15px !important; font-weight: 500 !important; }
+  .valuation-hero-cta { font-family: "DM Sans", "Segoe UI", sans-serif; font-size: 16px !important; font-weight: 650 !important; }
+  .material-presets button { font-family: "DM Sans", "Segoe UI", sans-serif; font-size: 15px !important; font-weight: 500 !important; }
   @media (max-width: 1024px) {
     .valuation-hero-copy { width: 100%; }
     .valuation-hero-image { width: 100%; }
@@ -124,8 +168,9 @@
   .header-nav-row .nav-link::after { height: 3px; border-radius: 3px 3px 0 0; }
   @media (max-width: 640px) {
     .header-top { min-height: 60px; }
-    .header-brand-mark { width: 28px; height: 28px; }
-    .header-brand-lockup { padding-left: 9px; }
+    .header-brand-mark { width: 32px; height: 32px; }
+    .header-brand-name { font-size: 18px; }
+    .header-brand-tagline { margin-left: 44px; }
     .header-utility-rail { gap: 0.35rem; }
     .header-nav-row > div { justify-content: flex-start; overflow-x: auto; }
   }
