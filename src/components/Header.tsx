@@ -121,30 +121,7 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         </div>
 
-        {/* Integrated Compact Live-Rate Ticker */}
-        <div className="hidden xl:flex items-center gap-4 border-l border-[#D9E1DB] pl-5 text-xs">
-          <span className="flex items-center gap-1.5 font-semibold text-[#17211D]">
-            <span className="w-2 h-2 rounded-full bg-[#D7F06B] animate-pulse"></span>
-            CPCB Spot:
-          </span>
-          <span className="text-[#4B5563]">
-            Copper <strong className="text-[#12181A] font-semibold">₹710</strong>
-          </span>
-          <span className="text-[#E5E8E6]">•</span>
-          <span className="text-[#4B5563]">
-            PCB <strong className="text-[#12181A] font-semibold">₹1,850</strong>
-          </span>
-          <span className="text-[#E5E8E6]">•</span>
-          <span className="text-[#4B5563]">
-            Li-ion <strong className="text-[#12181A] font-semibold">₹240</strong>
-          </span>
-          <button
-            onClick={() => setActiveTab("prices")}
-            className="text-xs text-[#1E5128] hover:underline font-semibold cursor-pointer pl-1"
-          >
-            View all →
-          </button>
-        </div>
+        <div className="hidden xl:block flex-1" />
 
         {/* Right Utility Tools: Notification, Audio, Language, Auth & Persona */}
         <div className="flex items-center gap-2 sm:gap-3 shrink-0">
@@ -320,7 +297,7 @@ export const Header: React.FC<HeaderProps> = ({
           {/* WhatsApp Bot Simulator */}
           <button
             onClick={() => setActiveTab("whatsapp")}
-            className={`min-h-[44px] px-3.5 py-2 text-sm rounded-xl shrink-0 flex items-center gap-2 transition-colors cursor-pointer ${
+            className={`header-overflow-item min-h-[44px] px-3.5 py-2 text-sm rounded-xl shrink-0 flex items-center gap-2 transition-colors cursor-pointer ${
               activeTab === "whatsapp"
                 ? "bg-[#12181A] text-white font-semibold"
                 : "text-[#4B5563] hover:text-[#12181A] hover:bg-[#F7F8F6] font-medium"
@@ -333,7 +310,7 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Safety Tips */}
           <button
             onClick={() => setActiveTab("safety")}
-            className={`min-h-[44px] px-3.5 py-2 text-sm rounded-xl shrink-0 flex items-center gap-2 transition-colors cursor-pointer ${
+            className={`header-overflow-item min-h-[44px] px-3.5 py-2 text-sm rounded-xl shrink-0 flex items-center gap-2 transition-colors cursor-pointer ${
               activeTab === "safety"
                 ? "bg-[#12181A] text-white font-semibold"
                 : "text-[#4B5563] hover:text-[#12181A] hover:bg-[#F7F8F6] font-medium"
@@ -346,7 +323,7 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Earnings Ledger / Receipts */}
           <button
             onClick={() => setActiveTab("ledger")}
-            className={`min-h-[44px] px-3.5 py-2 text-sm rounded-xl shrink-0 flex items-center gap-2 transition-colors cursor-pointer ${
+            className={`header-overflow-item min-h-[44px] px-3.5 py-2 text-sm rounded-xl shrink-0 flex items-center gap-2 transition-colors cursor-pointer ${
               activeTab === "ledger"
                 ? "bg-[#12181A] text-white font-semibold"
                 : "text-[#4B5563] hover:text-[#12181A] hover:bg-[#F7F8F6] font-medium"
@@ -441,7 +418,10 @@ export const Header: React.FC<HeaderProps> = ({
           {isMoreOpen && (
             <div className="absolute right-4 top-[calc(100%+8px)] z-50 w-64 rounded-2xl border border-[#D9E1DB] bg-white p-2 shadow-xl">
               <button onClick={() => { setActiveTab("group-pool"); setIsMoreOpen(false); }} className="flex min-h-[44px] w-full items-center gap-3 rounded-xl px-3 text-left text-sm font-semibold text-[#617067] hover:bg-[#E8F3E9] hover:text-[#244C3B]"><Truck className="w-4 h-4" />Group Pickup</button>
+              <button onClick={() => { setActiveTab("ledger"); setIsMoreOpen(false); }} className="flex min-h-[44px] w-full items-center gap-3 rounded-xl px-3 text-left text-sm font-semibold text-[#617067] hover:bg-[#E8F3E9] hover:text-[#244C3B]"><Coins className="w-4 h-4" />Digital Bills & Ledger</button>
               <button onClick={() => { setActiveTab("compliance"); setIsMoreOpen(false); }} className="flex min-h-[44px] w-full items-center gap-3 rounded-xl px-3 text-left text-sm font-semibold text-[#617067] hover:bg-[#E8F3E9] hover:text-[#244C3B]"><Building2 className="w-4 h-4" />Recycler Portal</button>
+              <button onClick={() => { setActiveTab("whatsapp"); setIsMoreOpen(false); }} className="flex min-h-[44px] w-full items-center gap-3 rounded-xl px-3 text-left text-sm font-semibold text-[#617067] hover:bg-[#E8F3E9] hover:text-[#244C3B]"><MessageSquare className="w-4 h-4" />WhatsApp Channel</button>
+              <button onClick={() => { setActiveTab("safety"); setIsMoreOpen(false); }} className="flex min-h-[44px] w-full items-center gap-3 rounded-xl px-3 text-left text-sm font-semibold text-[#617067] hover:bg-[#E8F3E9] hover:text-[#244C3B]"><ShieldCheck className="w-4 h-4" />Safety Guide</button>
               <button onClick={() => { setActiveTab("admin"); setIsMoreOpen(false); }} className="flex min-h-[44px] w-full items-center gap-3 rounded-xl px-3 text-left text-sm font-semibold text-[#617067] hover:bg-[#E8F3E9] hover:text-[#244C3B]"><Database className="w-4 h-4" />CPCB Admin & Datasets</button>
               <button onClick={() => { setActiveTab("field-research"); setIsMoreOpen(false); }} className="flex min-h-[44px] w-full items-center gap-3 rounded-xl px-3 text-left text-sm font-semibold text-[#617067] hover:bg-[#E8F3E9] hover:text-[#244C3B]"><ClipboardList className="w-4 h-4" />Field Research</button>
               <button onClick={() => { setActiveTab("offline-queue"); setIsMoreOpen(false); }} className="flex min-h-[44px] w-full items-center gap-3 rounded-xl px-3 text-left text-sm font-semibold text-[#617067] hover:bg-[#FFF4D6] hover:text-[#8A5A00]"><WifiOff className="w-4 h-4" />Offline Shed Queue</button>
