@@ -716,20 +716,14 @@ export default function App() {
         language={language}
       />
 
-      {/* Global Status Footer */}
-      <footer className="bg-white border-t border-[#E5E8E6] py-4 px-4 sm:px-6 text-xs text-[#4B5563]">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div className="flex items-center gap-2.5">
-            <span className="w-2 h-2 rounded-full bg-[#1E5128] animate-pulse" />
-            <span className="text-[#12181A] font-semibold text-xs sm:text-sm">
-              Kabadiwala Connect CPCB Network • Bringing the Informal Collector into the Formal Recycling Chain
-            </span>
+      <footer className="mt-10 border-t border-[#D9E1DB] bg-[#17352A] px-4 py-8 text-[#DCE9DF] sm:px-6">
+        <div className="mx-auto grid max-w-7xl gap-6 sm:grid-cols-[1.4fr_1fr_1fr] sm:items-end">
+          <div>
+            <div className="mb-2 flex items-center gap-3"><span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#D7F06B] text-xs font-black tracking-[-0.12em] text-[#17352A]">KC</span><span className="font-bold text-white">Kabadiwala Connect</span></div>
+            <p className="max-w-md text-sm leading-6 text-[#B7D0BE]">A practical bridge from local collection to responsible recycling.</p>
           </div>
-          <div className="flex items-center gap-3 text-xs text-[#8A93A0] font-mono">
-            <span>E-Waste (Management) Rules 2022</span>
-            <span>•</span>
-            <span>EPR Formal Chain</span>
-          </div>
+          <div className="text-sm"><p className="mb-2 font-bold uppercase tracking-[0.14em] text-[#D7F06B]">Built around</p><p className="text-[#DCE9DF]">Fair prices · safer handling · traceable handovers</p></div>
+          <div className="text-sm sm:text-right"><p className="mb-2 font-bold uppercase tracking-[0.14em] text-[#D7F06B]">Prototype status</p><p className="text-[#B7D0BE]">Demo records are clearly marked and not official registrations.</p></div>
         </div>
       </footer>
     </div>

@@ -97,9 +97,9 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-40 select-none bg-[#F7F8F6] border-b border-[#D9E1DB]">
+    <header className="relative z-40 select-none bg-[#F7F8F6] border-b border-[#D9E1DB]">
       {/* Row 1: Brand Logo + Compact Ticker + Utility Controls */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2.5 flex items-center justify-between gap-4">
         {/* Brand Logo Mark */}
         <div
           className="flex items-center gap-3 cursor-pointer group shrink-0 min-h-[44px]"
@@ -240,7 +240,7 @@ export const Header: React.FC<HeaderProps> = ({
 
       {/* Row 2: Navigation Bar */}
       <div className="relative border-t border-[#E5E8E6] bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center gap-2 overflow-x-auto py-2 no-scrollbar">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center gap-1 overflow-x-auto py-1 no-scrollbar">
           {/* Snap & Estimate */}
           <button
             onClick={() => setActiveTab("snap")}

@@ -231,24 +231,34 @@ export const SnapEstimate: React.FC<SnapEstimateProps> = ({
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-10 space-y-10">
-      {/* 1. Page Header (Primary content card with 32px padding) */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-[#D9E1DB] pb-8">
-        <div className="space-y-2">
-          <div className="flex items-center gap-2">
-            <span className="text-[#244C3B] text-xs font-bold uppercase tracking-[0.14em] inline-flex items-center gap-2">
-              <span className="h-2 w-2 rounded-full bg-[#D7F06B]" /> Field valuation
-            </span>
-            <span className="text-[#849188] text-xs">Offline-ready · benchmark guided</span>
+      <section className="relative isolate overflow-hidden rounded-[1.5rem] bg-[#244C3B] px-7 py-8 text-white shadow-[0_18px_42px_rgba(23,53,42,0.16)] sm:px-10 sm:py-10">
+        <div className="absolute inset-y-0 right-0 -z-10 hidden w-2/5 bg-cover bg-center opacity-25 lg:block" style={{ backgroundImage: `url(${imagePreview})` }} />
+        <div className="absolute right-0 top-0 -z-10 h-full w-2/3 bg-gradient-to-l from-[#244C3B] to-transparent" />
+        <div className="max-w-2xl">
+          <div className="mb-4 flex flex-wrap items-center gap-3 text-xs font-bold uppercase tracking-[0.14em] text-[#D7F06B]">
+            <span className="inline-flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-[#D7F06B]" /> Field valuation</span>
+            <span className="font-normal tracking-normal text-[#B7D0BE]">Offline-ready · benchmark guided</span>
           </div>
-          <h1 className="text-2xl font-bold tracking-tight text-[#12181A]">
-            {language === "hi" ? "फोटो खींचें और तुरंत सही दाम जानें" : "Instant Scrap Valuation & Purity Scanner"}
+          <h1 className="max-w-2xl text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
+            {language === "hi" ? "फोटो खींचें और तुरंत सही दाम जानें" : "Know what your material is worth before you sell."}
           </h1>
-          <p className="text-sm text-[#4B5563] max-w-xl leading-relaxed">
+          <p className="mt-4 max-w-xl text-base leading-7 text-[#DCE9DF]">
             {language === "hi"
               ? "कचरे की फोटो अपलोड करें। एआई धातु की शुद्धता और सरकारी प्रमाणित रिसाइक्लिंग दर बताएगा।"
-              : "Upload scrap photo to detect metals, verify purity grade, and calculate non-discounted spot rates."}
+              : "Photograph a lot, add its approximate weight, and get a clear benchmark before you call a buyer."}
           </p>
+          <button onClick={startCamera} disabled={cameraActive || isScanningAI} className="mt-7 inline-flex min-h-[48px] items-center gap-2 rounded-xl bg-[#D7F06B] px-5 py-3 text-sm font-bold text-[#17352A] transition hover:bg-[#C7E55B]">
+            <Camera className="h-4 w-4" /> Start with a photo
+          </button>
         </div>
+        <div className="mt-8 flex flex-wrap gap-2 text-xs font-semibold text-[#DCE9DF] lg:absolute lg:bottom-8 lg:right-10 lg:mt-0 lg:flex-col lg:items-end">
+          <span className="rounded-full border border-[#B7D0BE]/30 bg-[#17352A]/40 px-3 py-1.5">17 material categories</span>
+          <span className="rounded-full border border-[#B7D0BE]/30 bg-[#17352A]/40 px-3 py-1.5">Hindi · Marathi · English</span>
+        </div>
+      </section>
+
+      {/* Quick Presets */}
+      <div className="flex flex-col gap-3 border-b border-[#D9E1DB] pb-6 sm:flex-row sm:items-center sm:justify-between">
 
         {/* Quick Presets (Secondary button tier) */}
         <div>
