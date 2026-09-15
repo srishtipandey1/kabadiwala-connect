@@ -279,31 +279,31 @@ export const SnapEstimate: React.FC<SnapEstimateProps> = ({
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-10 space-y-10">
-      <section className="relative isolate overflow-hidden rounded-[1.5rem] bg-[#244C3B] px-7 py-8 text-white shadow-[0_18px_42px_rgba(23,53,42,0.16)] sm:px-10 sm:py-10">
-        <div className="absolute inset-y-0 right-0 -z-10 hidden w-[46%] bg-cover bg-center opacity-70 lg:block" style={{ backgroundImage: `url(${imagePreview})` }} />
-        <div className="absolute right-0 top-0 -z-10 h-full w-3/5 bg-[#244C3B]/60" />
-        <div className="absolute inset-y-0 right-[46%] -z-10 hidden w-px bg-[#D7F06B]/40 lg:block" />
-        <div className="max-w-2xl">
+    <div className="max-w-[1480px] mx-auto px-6 py-10 space-y-10">
+      <section className="valuation-hero relative isolate overflow-hidden rounded-[1.5rem] bg-[#244C3B] px-7 py-8 text-white shadow-[0_18px_42px_rgba(23,53,42,0.16)] sm:px-10 sm:py-10 lg:flex lg:items-stretch lg:px-12 lg:py-12">
+        <div className="valuation-hero-image absolute inset-y-0 right-0 -z-10 bg-cover bg-center" style={{ backgroundImage: `url(${imagePreview})` }} />
+        <div className="valuation-hero-overlay absolute right-0 top-0 -z-10 h-full" />
+        <div className="valuation-hero-divider absolute inset-y-0 -z-10 hidden w-px bg-[#D7F06B]/40 lg:block" />
+        <div className="valuation-hero-copy max-w-2xl">
           <div className="mb-4 flex flex-wrap items-center gap-3 text-xs font-bold uppercase tracking-[0.14em] text-[#D7F06B]">
             <span className="inline-flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-[#D7F06B]" /> Field valuation</span>
             <span className="font-normal tracking-normal text-[#B7D0BE]">Offline-ready · benchmark guided</span>
           </div>
-          <h1 className="max-w-2xl text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
+          <h1 className="max-w-[680px] text-3xl leading-tight tracking-tight sm:text-4xl lg:text-[3rem]">
             {language === "hi" ? "फोटो खींचें और तुरंत सही दाम जानें" : "Know what your material is worth before you sell."}
           </h1>
-          <p className="mt-4 max-w-xl text-base leading-7 text-[#DCE9DF]">
+          <p className="mt-4 max-w-[650px] text-base leading-7 text-[#DCE9DF] lg:text-[17px]">
             {language === "hi"
               ? "कचरे की फोटो अपलोड करें। एआई धातु की शुद्धता और सरकारी प्रमाणित रिसाइक्लिंग दर बताएगा।"
               : "Photograph a lot, add its approximate weight, and get a clear benchmark before you call a buyer."}
           </p>
-          <button onClick={startCamera} disabled={cameraActive || isScanningAI} className="mt-7 inline-flex min-h-[48px] items-center gap-2 rounded-xl bg-[#D7F06B] px-5 py-3 text-sm font-bold text-[#17352A] transition hover:bg-[#C7E55B]">
+          <button onClick={startCamera} disabled={cameraActive || isScanningAI} className="valuation-hero-cta mt-7 inline-flex items-center gap-2 bg-[#D7F06B] text-sm font-semibold text-[#17352A] transition hover:bg-[#C7E55B]">
             <Camera className="h-4 w-4" /> Start with a photo
           </button>
         </div>
-        <div className="mt-8 flex flex-wrap gap-2 text-xs font-semibold text-[#DCE9DF] lg:absolute lg:bottom-8 lg:right-10 lg:mt-0 lg:flex-col lg:items-end">
-          <span className="rounded-full border border-[#B7D0BE]/40 bg-[#17352A]/65 px-3 py-1.5">{selectedMaterial.name[language]}</span>
-          <span className="rounded-full border border-[#D7F06B]/50 bg-[#17352A]/75 px-3 py-1.5 text-[#D7F06B]">₹{currentRatePerKg.toLocaleString("en-IN")} / kg benchmark</span>
+        <div className="mt-8 flex flex-wrap gap-2 text-xs font-semibold text-[#DCE9DF] lg:absolute lg:bottom-8 lg:right-8 lg:mt-0 lg:flex-col lg:items-end">
+          <span className="valuation-context border border-[#B7D0BE]/40 bg-[#17352A]/70 px-3 py-1.5 text-sm">{selectedMaterial.name[language]}</span>
+          <span className="valuation-context border border-[#D7F06B]/50 bg-[#17352A]/80 px-3 py-1.5 text-sm text-[#D7F06B]">₹{currentRatePerKg.toLocaleString("en-IN")} / kg benchmark</span>
         </div>
       </section>
 
@@ -315,7 +315,7 @@ export const SnapEstimate: React.FC<SnapEstimateProps> = ({
           <span className="text-xs text-[#8A93A0] mb-3 block">
             Common materials
           </span>
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="material-presets flex items-center gap-2">
             {MATERIALS_DATA.slice(0, 4).map((mat) => {
               const isSelected = selectedMaterial.key === mat.key;
               return (
