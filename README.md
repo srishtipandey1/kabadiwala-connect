@@ -398,4 +398,4 @@ Seeded people, prices, facilities, license references, field interviews, and loc
 
 ## 14. License
 
-No license has been declared for this repository yet. Add a license file before distributing the project publicly under specific reuse terms.
+This project is released under the [MIT License](LICENSE). The demo datasets, identities, authorization references, and field records remain illustrative and must be independently verified before operational use.
