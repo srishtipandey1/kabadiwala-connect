@@ -96,7 +96,7 @@ export const PriceGuide: React.FC<PriceGuideProps> = ({
           materialKey: testMaterialKey,
           weightKg: 25,
           purity: "high",
-          userOfferedRate: offeredRate,
+          offeredRatePerKg: offeredRate,
         }),
       });
 

@@ -52,19 +52,22 @@ export const RecyclerPortal: React.FC<RecyclerPortalProps> = ({
   const runFraudCheck = async () => {
     setIsAnalyzingFraud(true);
     try {
-      const res = await fetch("/api/ai/verify-fraud", {
+      const res = await fetch("/api/ai/detect-fraud", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          imageBase64: fraudLotImage,
-          claimedMaterial: "copper-wire",
-          claimedWeightKg: claimedWeight,
-          claimedPricePerKg: 640,
+          transaction: {
+            materialKey: "copper-wire",
+            weightKg: claimedWeight,
+            ratePerKgInr: 640,
+            photoUrl: fraudLotImage,
+            gpsCoords: { latitude: 19.0435, longitude: 72.8567 },
+          },
         }),
       });
       const data = await res.json();
-      if (data.fraudAnalysis) {
-        setFraudResult(data.fraudAnalysis);
+      if (data.fraudCheck) {
+        setFraudResult(data.fraudCheck);
       }
     } catch (err) {
       console.error("Fraud analysis failed:", err);

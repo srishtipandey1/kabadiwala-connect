@@ -683,6 +683,31 @@ export function getAllFieldInterviews() {
   }));
 }
 
+export function insertFieldInterview(interview: any) {
+  const stmt = db.prepare(`
+    INSERT INTO field_interviews (
+      id, collector_name, location, years_in_trade, daily_volume_kg,
+      middleman_rate_note, pain_points_json, quotes_raw_json, photo_refs_json,
+      interview_date, interviewer_notes, status
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `);
+  stmt.run(
+    interview.id,
+    interview.collectorName || "Anonymized Collector",
+    interview.location,
+    interview.yearsInTrade ?? null,
+    interview.dailyVolumeKg || "",
+    interview.currentMiddlemanRateNote || "",
+    JSON.stringify(interview.painPoints || []),
+    JSON.stringify(interview.quotesRaw || []),
+    JSON.stringify(interview.photoRefs || []),
+    interview.interviewDate || new Date().toISOString().split("T")[0],
+    interview.interviewerNotes || null,
+    interview.status || "VERIFIED_GROUND_SURVEY"
+  );
+  return interview;
+}
+
 export function getAllMLValidationLogs() {
   const rows = db.prepare("SELECT * FROM ml_validation_log ORDER BY timestamp DESC").all() as any[];
   return rows.map((r) => ({

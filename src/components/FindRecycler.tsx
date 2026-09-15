@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Language, Recycler } from "../types";
 import { MOCK_RECYCLERS, MATERIALS_DATA } from "../data/mockData";
 import {
@@ -28,8 +28,26 @@ export const FindRecycler: React.FC<FindRecyclerProps> = ({
   const [selectedMaterial, setSelectedMaterial] = useState<string>(filterMaterial);
   const [maxDistance, setMaxDistance] = useState<number>(30);
   const [bookingSuccessRecycler, setBookingSuccessRecycler] = useState<string | null>(null);
+  const [recyclers, setRecyclers] = useState<Recycler[]>(MOCK_RECYCLERS);
 
-  const filteredRecyclers = MOCK_RECYCLERS.filter((rec) => {
+  useEffect(() => {
+    const params = new URLSearchParams({ maxDistance: String(maxDistance) });
+    if (selectedMaterial !== "all") params.set("material", selectedMaterial);
+    fetch(`/api/recyclers?${params.toString()}`)
+      .then((response) => (response.ok ? response.json() : Promise.reject(new Error("Recycler API unavailable"))))
+      .then((data) => {
+        if (Array.isArray(data.recyclers)) {
+          setRecyclers(data.recyclers.map((rec: Recycler) => ({
+            ...rec,
+            paymentMethods: rec.paymentMethods || ["Cash at weighing", "UPI optional"],
+            turnaroundHours: rec.turnaroundHours || 4,
+          })));
+        }
+      })
+      .catch(() => setRecyclers(MOCK_RECYCLERS));
+  }, [maxDistance, selectedMaterial]);
+
+  const filteredRecyclers = recyclers.filter((rec) => {
     const matchesMat =
       selectedMaterial === "all" || rec.acceptedMaterials.includes(selectedMaterial);
     const matchesDist = rec.distanceKm <= maxDistance;

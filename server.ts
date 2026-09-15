@@ -14,6 +14,7 @@ import {
   getAllReceipts,
   insertReceipt,
   getAllFieldInterviews,
+  insertFieldInterview,
   getAllMLValidationLogs,
   recordMLValidationRun
 } from "./src/server/db";
@@ -240,6 +241,15 @@ app.get("/api/field-interviews", (req, res) => {
   try {
     const interviews = getAllFieldInterviews();
     res.json({ status: "success", count: interviews.length, interviews });
+  } catch (err: any) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post("/api/field-interviews", (req, res) => {
+  try {
+    const interview = insertFieldInterview(req.body);
+    res.json({ status: "success", interview });
   } catch (err: any) {
     res.status(500).json({ error: err.message });
   }

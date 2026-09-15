@@ -124,7 +124,7 @@ SQLite tables are initialized in [src/server/db.ts](src/server/db.ts). The front
 | `GET /api/prices` | Read benchmark price index. |
 | `GET /api/recyclers` | Filter authorized recycler records. |
 | `GET/POST /api/receipts` | Read and persist digital receipts. |
-| `GET /api/field-interviews` | Read field research records. |
+| `GET/POST /api/field-interviews` | Read and persist field research records. |
 | `GET/POST /api/ml-validation` | Read validation history and run labeled Gemini benchmarks. |
 | `POST /api/ml/predict-material` | Run the locally trained TensorFlow classifier. |
 | `POST /api/ai/detect-material` | Gemini image classification fallback. |

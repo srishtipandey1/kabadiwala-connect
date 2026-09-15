@@ -128,8 +128,16 @@ export const FieldResearch: React.FC<FieldResearchProps> = ({ language, onNaviga
     };
 
     try {
-      // Direct SQLite backend insertion if available
-      setInterviews((prev) => [newRecord, ...prev]);
+      const response = await fetch("/api/field-interviews", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newRecord),
+      });
+      const data = await response.json();
+      if (!response.ok || data.status !== "success") {
+        throw new Error(data.error || "Could not save interview");
+      }
+      setInterviews((prev) => [data.interview || newRecord, ...prev]);
       setSaveSuccessMessage("Ground interview record saved to persistent SQLite database.");
       setTimeout(() => {
         setSaveSuccessMessage(null);
