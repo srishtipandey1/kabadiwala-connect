@@ -58,6 +58,7 @@
   .dashboard-shell [class~="text-slate-500"] { color: #849188 !important; }
   .dashboard-shell [class~="border-slate-200"] { border-color: #D9E1DB !important; }
   .dashboard-shell [class~="border-slate-800"] { border-color: #17352A !important; }
+  .dashboard-shell .header-overflow-item { display: none !important; }
 
   .font-hindi, .font-marathi {
     font-family: "Mangal", "Nirmala UI", "Devanagari Sangam MN", "Noto Sans Devanagari", sans-serif;

@@ -230,15 +230,15 @@ export const SnapEstimate: React.FC<SnapEstimateProps> = ({
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-8 space-y-8">
+    <div className="max-w-7xl mx-auto px-6 py-10 space-y-10">
       {/* 1. Page Header (Primary content card with 32px padding) */}
-      <div className="bg-white border border-[#E5E8E6] rounded-2xl p-8 shadow-2xs flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-[#D9E1DB] pb-8">
         <div className="space-y-2">
           <div className="flex items-center gap-2">
-            <span className="bg-[#F0FDF4] text-[#1E5128] text-xs font-semibold px-2.5 py-1 rounded-md border border-[#1E5128]/20 inline-flex items-center gap-1.5">
-              <Sparkles className="w-4 h-4 text-[#1E5128]" /> Gemini Vision Engine
+            <span className="text-[#244C3B] text-xs font-bold uppercase tracking-[0.14em] inline-flex items-center gap-2">
+              <span className="h-2 w-2 rounded-full bg-[#D7F06B]" /> Field valuation
             </span>
-            <span className="text-[#8A93A0] text-xs">• CPCB Benchmarks</span>
+            <span className="text-[#849188] text-xs">Offline-ready · benchmark guided</span>
           </div>
           <h1 className="text-2xl font-bold tracking-tight text-[#12181A]">
             {language === "hi" ? "फोटो खींचें और तुरंत सही दाम जानें" : "Instant Scrap Valuation & Purity Scanner"}
@@ -279,7 +279,7 @@ export const SnapEstimate: React.FC<SnapEstimateProps> = ({
       {/* 2. Main Workspace (2-Column Flat Layout with 32px gap) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Left Column: Visual Scanner & Camera */}
-        <div className="lg:col-span-5 bg-white border border-[#E5E8E6] rounded-2xl p-6 shadow-2xs space-y-6">
+        <div className="lg:col-span-5 bg-white border border-[#D9E1DB] rounded-[1.25rem] p-6 shadow-[0_12px_32px_rgba(23,33,29,0.06)] space-y-6">
           <div className="flex items-center justify-between">
             <h2 className="text-md font-semibold text-[#12181A] flex items-center gap-2">
               <Camera className="w-4 h-4 text-[#8A93A0]" strokeWidth={1.75} />
@@ -400,7 +400,7 @@ export const SnapEstimate: React.FC<SnapEstimateProps> = ({
         </div>
 
         {/* Right Column: Rate Calculator & Valuation Card (Primary Card with 32px padding) */}
-        <div className="lg:col-span-7 bg-white border border-[#E5E8E6] rounded-2xl p-8 shadow-2xs space-y-6">
+        <div className="lg:col-span-7 bg-white border border-[#D9E1DB] rounded-[1.25rem] p-8 shadow-[0_12px_32px_rgba(23,33,29,0.06)] space-y-6">
           {/* Material Category Selector */}
           <div>
             <label className="block text-xs text-[#8A93A0] mb-3">

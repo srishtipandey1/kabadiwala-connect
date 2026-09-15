@@ -20,7 +20,9 @@ import {
   User,
   ClipboardList,
   Wifi,
-  WifiOff
+  WifiOff,
+  MoreHorizontal,
+  ChevronDown
 } from "lucide-react";
 import { AudioGuideEngine } from "../utils/speech";
 import { NotificationCenter } from "./NotificationCenter";
@@ -75,6 +77,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenOfflineQueueModal,
 }) => {
   const [isNotificationOpen, setIsNotificationOpen] = useState<boolean>(false);
+  const [isMoreOpen, setIsMoreOpen] = useState<boolean>(false);
 
   const toggleSound = () => {
     if (soundEnabled) {
@@ -119,21 +122,21 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
 
         {/* Integrated Compact Live-Rate Ticker */}
-        <div className="hidden xl:flex items-center gap-3 bg-white border border-[#D9E1DB] rounded-xl px-4 py-2 text-xs">
+        <div className="hidden xl:flex items-center gap-4 border-l border-[#D9E1DB] pl-5 text-xs">
           <span className="flex items-center gap-1.5 font-semibold text-[#17211D]">
             <span className="w-2 h-2 rounded-full bg-[#D7F06B] animate-pulse"></span>
             CPCB Spot:
           </span>
           <span className="text-[#4B5563]">
-            Copper: <strong className="text-[#12181A] font-semibold">₹710/kg</strong>
+            Copper <strong className="text-[#12181A] font-semibold">₹710</strong>
           </span>
           <span className="text-[#E5E8E6]">•</span>
           <span className="text-[#4B5563]">
-            PCB: <strong className="text-[#12181A] font-semibold">₹1,850/kg</strong>
+            PCB <strong className="text-[#12181A] font-semibold">₹1,850</strong>
           </span>
           <span className="text-[#E5E8E6]">•</span>
           <span className="text-[#4B5563]">
-            Li-ion: <strong className="text-[#12181A] font-semibold">₹240/kg</strong>
+            Li-ion <strong className="text-[#12181A] font-semibold">₹240</strong>
           </span>
           <button
             onClick={() => setActiveTab("prices")}
@@ -259,7 +262,7 @@ export const Header: React.FC<HeaderProps> = ({
       </div>
 
       {/* Row 2: Navigation Bar */}
-      <div className="border-t border-[#E5E8E6] bg-white">
+      <div className="relative border-t border-[#E5E8E6] bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center gap-2 overflow-x-auto py-2 no-scrollbar">
           {/* Snap & Estimate */}
           <button
@@ -356,7 +359,7 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Group Pickup */}
           <button
             onClick={() => setActiveTab("group-pool")}
-            className={`min-h-[44px] px-3.5 py-2 text-sm rounded-xl shrink-0 flex items-center gap-2 transition-colors cursor-pointer ${
+            className={`header-overflow-item min-h-[44px] px-3.5 py-2 text-sm rounded-xl shrink-0 flex items-center gap-2 transition-colors cursor-pointer ${
               activeTab === "group-pool"
                 ? "bg-[#12181A] text-white font-semibold"
                 : "text-[#4B5563] hover:text-[#12181A] hover:bg-[#F7F8F6] font-medium"
@@ -370,7 +373,7 @@ export const Header: React.FC<HeaderProps> = ({
           {(persona === "recycler" || persona === "admin") && (
             <button
               onClick={() => setActiveTab("compliance")}
-              className={`min-h-[44px] px-3.5 py-2 text-sm rounded-xl shrink-0 flex items-center gap-2 transition-colors cursor-pointer ${
+              className={`header-overflow-item min-h-[44px] px-3.5 py-2 text-sm rounded-xl shrink-0 flex items-center gap-2 transition-colors cursor-pointer ${
                 activeTab === "compliance"
                   ? "bg-[#12181A] text-white font-semibold"
                   : "text-[#4B5563] hover:text-[#12181A] hover:bg-[#F7F8F6] font-medium"
@@ -384,7 +387,7 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Admin & Datasets Tab */}
           <button
             onClick={() => setActiveTab("admin")}
-            className={`min-h-[44px] px-3.5 py-2 text-sm rounded-xl shrink-0 flex items-center gap-2 transition-colors cursor-pointer ${
+            className={`header-overflow-item min-h-[44px] px-3.5 py-2 text-sm rounded-xl shrink-0 flex items-center gap-2 transition-colors cursor-pointer ${
               activeTab === "admin"
                 ? "bg-[#1E5128] text-white font-semibold shadow-xs"
                 : "text-[#1E5128] hover:bg-[#F0FDF4] bg-[#F0FDF4]/60 border border-[#1E5128]/20 font-semibold"
@@ -397,7 +400,7 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Field Research Tab */}
           <button
             onClick={() => setActiveTab("field-research")}
-            className={`min-h-[44px] px-3.5 py-2 text-sm rounded-xl shrink-0 flex items-center gap-2 transition-colors cursor-pointer ${
+            className={`header-overflow-item min-h-[44px] px-3.5 py-2 text-sm rounded-xl shrink-0 flex items-center gap-2 transition-colors cursor-pointer ${
               activeTab === "field-research"
                 ? "bg-[#12181A] text-white font-semibold shadow-xs"
                 : "text-[#4B5563] hover:text-[#12181A] hover:bg-[#F7F8F6] font-medium"
@@ -410,7 +413,7 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Offline Queue Tab */}
           <button
             onClick={() => setActiveTab("offline-queue")}
-            className={`min-h-[44px] px-3.5 py-2 text-sm rounded-xl shrink-0 flex items-center gap-2 transition-colors cursor-pointer ${
+            className={`header-overflow-item min-h-[44px] px-3.5 py-2 text-sm rounded-xl shrink-0 flex items-center gap-2 transition-colors cursor-pointer ${
               activeTab === "offline-queue"
                 ? "bg-[#92400E] text-white font-semibold shadow-xs"
                 : "text-[#92400E] hover:bg-[#FFFBEB] bg-[#FFFBEB]/60 border border-[#FDE68A] font-semibold"
@@ -424,6 +427,26 @@ export const Header: React.FC<HeaderProps> = ({
               </span>
             )}
           </button>
+
+          <button
+            onClick={() => setIsMoreOpen((open) => !open)}
+            aria-expanded={isMoreOpen}
+            className="min-h-[44px] px-3.5 py-2 text-sm rounded-xl shrink-0 flex items-center gap-2 text-[#617067] hover:bg-[#E8F3E9] hover:text-[#244C3B] font-semibold cursor-pointer"
+          >
+            <MoreHorizontal className="w-4 h-4" />
+            <span>More</span>
+            <ChevronDown className={`w-3.5 h-3.5 transition-transform ${isMoreOpen ? "rotate-180" : ""}`} />
+          </button>
+
+          {isMoreOpen && (
+            <div className="absolute right-4 top-[calc(100%+8px)] z-50 w-64 rounded-2xl border border-[#D9E1DB] bg-white p-2 shadow-xl">
+              <button onClick={() => { setActiveTab("group-pool"); setIsMoreOpen(false); }} className="flex min-h-[44px] w-full items-center gap-3 rounded-xl px-3 text-left text-sm font-semibold text-[#617067] hover:bg-[#E8F3E9] hover:text-[#244C3B]"><Truck className="w-4 h-4" />Group Pickup</button>
+              <button onClick={() => { setActiveTab("compliance"); setIsMoreOpen(false); }} className="flex min-h-[44px] w-full items-center gap-3 rounded-xl px-3 text-left text-sm font-semibold text-[#617067] hover:bg-[#E8F3E9] hover:text-[#244C3B]"><Building2 className="w-4 h-4" />Recycler Portal</button>
+              <button onClick={() => { setActiveTab("admin"); setIsMoreOpen(false); }} className="flex min-h-[44px] w-full items-center gap-3 rounded-xl px-3 text-left text-sm font-semibold text-[#617067] hover:bg-[#E8F3E9] hover:text-[#244C3B]"><Database className="w-4 h-4" />CPCB Admin & Datasets</button>
+              <button onClick={() => { setActiveTab("field-research"); setIsMoreOpen(false); }} className="flex min-h-[44px] w-full items-center gap-3 rounded-xl px-3 text-left text-sm font-semibold text-[#617067] hover:bg-[#E8F3E9] hover:text-[#244C3B]"><ClipboardList className="w-4 h-4" />Field Research</button>
+              <button onClick={() => { setActiveTab("offline-queue"); setIsMoreOpen(false); }} className="flex min-h-[44px] w-full items-center gap-3 rounded-xl px-3 text-left text-sm font-semibold text-[#617067] hover:bg-[#FFF4D6] hover:text-[#8A5A00]"><WifiOff className="w-4 h-4" />Offline Shed Queue</button>
+            </div>
+          )}
         </div>
       </div>
     </header>
