@@ -237,7 +237,7 @@ export const Header: React.FC<HeaderProps> = ({
 
       {/* Row 2: Navigation Bar */}
       <div className="header-nav-row relative border-t border-[#E5E8E6] bg-white">
-        <div className="header-nav-inner max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-start gap-1 overflow-visible py-0.5 no-scrollbar">
+        <div className="header-nav-inner max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-center gap-1 overflow-visible py-0.5 no-scrollbar">
           {/* Snap & Estimate */}
           <button
             onClick={() => setActiveTab("snap")}
