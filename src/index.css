@@ -61,8 +61,9 @@
   .dashboard-shell .header-overflow-item { display: none !important; }
   .dashboard-shell .nav-link { position: relative; color: #617067; font-weight: 600; }
   .dashboard-shell .nav-link:hover { color: #244C3B; }
+  .dashboard-shell .nav-link[class*="bg-[#12181A]"] { background-color: transparent !important; }
   .dashboard-shell .nav-link::after { content: ""; position: absolute; left: 0.75rem; right: 0.75rem; bottom: 0; height: 2px; background: transparent; }
-  .dashboard-shell .nav-link[class*="text-white"] { color: #244C3B; }
+  .dashboard-shell .nav-link[class*="text-white"] { color: #244C3B !important; }
   .dashboard-shell .nav-link[class*="text-white"]::after { background: #D7F06B; }
   .dashboard-shell .nav-tools { border: 1px solid #D9E1DB; }
 
