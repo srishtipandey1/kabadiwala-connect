@@ -233,7 +233,7 @@ export const SnapEstimate: React.FC<SnapEstimateProps> = ({
     <div className="max-w-7xl mx-auto px-6 py-10 space-y-10">
       <section className="relative isolate overflow-hidden rounded-[1.5rem] bg-[#244C3B] px-7 py-8 text-white shadow-[0_18px_42px_rgba(23,53,42,0.16)] sm:px-10 sm:py-10">
         <div className="absolute inset-y-0 right-0 -z-10 hidden w-[46%] bg-cover bg-center opacity-70 lg:block" style={{ backgroundImage: `url(${imagePreview})` }} />
-        <div className="absolute right-0 top-0 -z-10 h-full w-3/5 bg-gradient-to-r from-[#244C3B] via-[#244C3B]/75 to-[#244C3B]/15" />
+        <div className="absolute right-0 top-0 -z-10 h-full w-3/5 bg-[#244C3B]/60" />
         <div className="absolute inset-y-0 right-[46%] -z-10 hidden w-px bg-[#D7F06B]/40 lg:block" />
         <div className="max-w-2xl">
           <div className="mb-4 flex flex-wrap items-center gap-3 text-xs font-bold uppercase tracking-[0.14em] text-[#D7F06B]">

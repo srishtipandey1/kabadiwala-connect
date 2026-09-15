@@ -32,7 +32,7 @@
   }
 
   .dashboard-shell {
-    background-image: linear-gradient(180deg, rgba(232, 243, 233, 0.38) 0, rgba(247, 248, 246, 0) 22rem);
+    background-color: #F7F8F6;
   }
 
   .dashboard-shell [class~="bg-[#12181A]"] { background-color: #244C3B !important; }
