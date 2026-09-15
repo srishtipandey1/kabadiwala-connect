@@ -105,12 +105,10 @@ export const Header: React.FC<HeaderProps> = ({
           className="flex items-center gap-3 cursor-pointer group shrink-0 min-h-[44px]"
           onClick={() => setActiveTab(persona === "admin" ? "admin" : persona === "recycler" ? "compliance" : "snap")}
         >
+          <span className="header-brand-mark" aria-hidden="true">KC</span>
           <div className="header-brand-lockup">
-            <div className="flex items-center gap-2.5">
-              <span className="header-brand-mark" aria-hidden="true">KC</span>
-              <div className="header-brand-name">
-                Kabadiwala Connect
-              </div>
+            <div className="header-brand-name">
+              Kabadiwala Connect
             </div>
             <p className="header-brand-tagline text-[#617067] hidden md:block max-w-sm truncate">
               Bringing the Informal Collector into the Formal Recycling Chain
