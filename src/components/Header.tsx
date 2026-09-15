@@ -405,18 +405,19 @@ export const Header: React.FC<HeaderProps> = ({
             )}
           </button>
 
-          <button
-            onClick={() => setIsMoreOpen((open) => !open)}
-            aria-expanded={isMoreOpen}
-            className="nav-tools min-h-[52px] ml-2 px-3.5 py-2 text-sm rounded-lg shrink-0 flex items-center gap-2 text-[#617067] hover:bg-[#E8F3E9] hover:text-[#244C3B] font-semibold cursor-pointer"
-          >
-            <MoreHorizontal className="w-4 h-4" />
-            <span>Tools</span>
-            <ChevronDown className={`w-3.5 h-3.5 transition-transform ${isMoreOpen ? "rotate-180" : ""}`} />
-          </button>
+          <div className="relative shrink-0">
+            <button
+              onClick={() => setIsMoreOpen((open) => !open)}
+              aria-expanded={isMoreOpen}
+              className="nav-tools min-h-[52px] ml-2 px-3.5 py-2 text-sm rounded-lg shrink-0 flex items-center gap-2 text-[#617067] hover:bg-[#E8F3E9] hover:text-[#244C3B] font-semibold cursor-pointer"
+            >
+              <MoreHorizontal className="w-4 h-4" />
+              <span>Tools</span>
+              <ChevronDown className={`w-3.5 h-3.5 transition-transform ${isMoreOpen ? "rotate-180" : ""}`} />
+            </button>
 
           {isMoreOpen && (
-            <div className="absolute left-1/2 top-[calc(100%+1px)] z-50 w-[280px] -translate-x-1/2 border border-[#D9E1DB] border-t-2 border-t-[#244C3B] bg-white p-2 shadow-[0_16px_30px_rgba(23,33,29,0.12)]">
+            <div className="absolute right-0 top-[calc(100%+1px)] z-50 w-[280px] border border-[#D9E1DB] border-t-2 border-t-[#244C3B] bg-white p-2 shadow-[0_16px_30px_rgba(23,33,29,0.12)]">
               <div className="px-3 pb-2 pt-1 text-[11px] font-bold uppercase tracking-[0.14em] text-[#849188]">Workspace tools</div>
               <div className="grid grid-cols-2 gap-1">
                 <button onClick={() => { setActiveTab("group-pool"); setIsMoreOpen(false); }} className="flex min-h-[44px] items-center gap-2 px-3 text-left text-xs font-semibold text-[#617067] hover:bg-[#E8F3E9] hover:text-[#244C3B]"><Truck className="w-4 h-4" />Group Pickup</button>
@@ -430,6 +431,7 @@ export const Header: React.FC<HeaderProps> = ({
               </div>
             </div>
           )}
+          </div>
         </div>
       </div>
     </header>
