@@ -244,7 +244,7 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Snap & Estimate */}
           <button
             onClick={() => setActiveTab("snap")}
-            className={`min-h-[44px] px-3.5 py-2 text-sm rounded-xl shrink-0 flex items-center gap-2 transition-colors cursor-pointer ${
+            className={`nav-link min-h-[52px] px-3 py-2 text-sm shrink-0 flex items-center gap-2 transition-colors cursor-pointer ${
               activeTab === "snap"
                 ? "bg-[#12181A] text-white font-semibold"
                 : "text-[#4B5563] hover:text-[#12181A] hover:bg-[#F7F8F6] font-medium"
@@ -257,7 +257,7 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Price Guide */}
           <button
             onClick={() => setActiveTab("prices")}
-            className={`min-h-[44px] px-3.5 py-2 text-sm rounded-xl shrink-0 flex items-center gap-2 transition-colors cursor-pointer ${
+            className={`nav-link min-h-[52px] px-3 py-2 text-sm shrink-0 flex items-center gap-2 transition-colors cursor-pointer ${
               activeTab === "prices"
                 ? "bg-[#12181A] text-white font-semibold"
                 : "text-[#4B5563] hover:text-[#12181A] hover:bg-[#F7F8F6] font-medium"
@@ -270,7 +270,7 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Live Auction */}
           <button
             onClick={() => setActiveTab("auction")}
-            className={`min-h-[44px] px-3.5 py-2 text-sm rounded-xl shrink-0 flex items-center gap-2 transition-colors cursor-pointer ${
+            className={`nav-link min-h-[52px] px-3 py-2 text-sm shrink-0 flex items-center gap-2 transition-colors cursor-pointer ${
               activeTab === "auction"
                 ? "bg-[#12181A] text-white font-semibold"
                 : "text-[#4B5563] hover:text-[#12181A] hover:bg-[#F7F8F6] font-medium"
@@ -284,7 +284,7 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Find Recycler */}
           <button
             onClick={() => setActiveTab("recyclers")}
-            className={`min-h-[44px] px-3.5 py-2 text-sm rounded-xl shrink-0 flex items-center gap-2 transition-colors cursor-pointer ${
+            className={`nav-link min-h-[52px] px-3 py-2 text-sm shrink-0 flex items-center gap-2 transition-colors cursor-pointer ${
               activeTab === "recyclers"
                 ? "bg-[#12181A] text-white font-semibold"
                 : "text-[#4B5563] hover:text-[#12181A] hover:bg-[#F7F8F6] font-medium"
@@ -408,23 +408,26 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             onClick={() => setIsMoreOpen((open) => !open)}
             aria-expanded={isMoreOpen}
-            className="min-h-[44px] px-3.5 py-2 text-sm rounded-xl shrink-0 flex items-center gap-2 text-[#617067] hover:bg-[#E8F3E9] hover:text-[#244C3B] font-semibold cursor-pointer"
+            className="nav-tools min-h-[52px] ml-2 px-3.5 py-2 text-sm rounded-lg shrink-0 flex items-center gap-2 text-[#617067] hover:bg-[#E8F3E9] hover:text-[#244C3B] font-semibold cursor-pointer"
           >
             <MoreHorizontal className="w-4 h-4" />
-            <span>More</span>
+            <span>Tools</span>
             <ChevronDown className={`w-3.5 h-3.5 transition-transform ${isMoreOpen ? "rotate-180" : ""}`} />
           </button>
 
           {isMoreOpen && (
-            <div className="absolute right-4 top-[calc(100%+8px)] z-50 w-64 rounded-2xl border border-[#D9E1DB] bg-white p-2 shadow-xl">
-              <button onClick={() => { setActiveTab("group-pool"); setIsMoreOpen(false); }} className="flex min-h-[44px] w-full items-center gap-3 rounded-xl px-3 text-left text-sm font-semibold text-[#617067] hover:bg-[#E8F3E9] hover:text-[#244C3B]"><Truck className="w-4 h-4" />Group Pickup</button>
-              <button onClick={() => { setActiveTab("ledger"); setIsMoreOpen(false); }} className="flex min-h-[44px] w-full items-center gap-3 rounded-xl px-3 text-left text-sm font-semibold text-[#617067] hover:bg-[#E8F3E9] hover:text-[#244C3B]"><Coins className="w-4 h-4" />Digital Bills & Ledger</button>
-              <button onClick={() => { setActiveTab("compliance"); setIsMoreOpen(false); }} className="flex min-h-[44px] w-full items-center gap-3 rounded-xl px-3 text-left text-sm font-semibold text-[#617067] hover:bg-[#E8F3E9] hover:text-[#244C3B]"><Building2 className="w-4 h-4" />Recycler Portal</button>
-              <button onClick={() => { setActiveTab("whatsapp"); setIsMoreOpen(false); }} className="flex min-h-[44px] w-full items-center gap-3 rounded-xl px-3 text-left text-sm font-semibold text-[#617067] hover:bg-[#E8F3E9] hover:text-[#244C3B]"><MessageSquare className="w-4 h-4" />WhatsApp Channel</button>
-              <button onClick={() => { setActiveTab("safety"); setIsMoreOpen(false); }} className="flex min-h-[44px] w-full items-center gap-3 rounded-xl px-3 text-left text-sm font-semibold text-[#617067] hover:bg-[#E8F3E9] hover:text-[#244C3B]"><ShieldCheck className="w-4 h-4" />Safety Guide</button>
-              <button onClick={() => { setActiveTab("admin"); setIsMoreOpen(false); }} className="flex min-h-[44px] w-full items-center gap-3 rounded-xl px-3 text-left text-sm font-semibold text-[#617067] hover:bg-[#E8F3E9] hover:text-[#244C3B]"><Database className="w-4 h-4" />CPCB Admin & Datasets</button>
-              <button onClick={() => { setActiveTab("field-research"); setIsMoreOpen(false); }} className="flex min-h-[44px] w-full items-center gap-3 rounded-xl px-3 text-left text-sm font-semibold text-[#617067] hover:bg-[#E8F3E9] hover:text-[#244C3B]"><ClipboardList className="w-4 h-4" />Field Research</button>
-              <button onClick={() => { setActiveTab("offline-queue"); setIsMoreOpen(false); }} className="flex min-h-[44px] w-full items-center gap-3 rounded-xl px-3 text-left text-sm font-semibold text-[#617067] hover:bg-[#FFF4D6] hover:text-[#8A5A00]"><WifiOff className="w-4 h-4" />Offline Shed Queue</button>
+            <div className="absolute left-1/2 top-[calc(100%+1px)] z-50 w-[280px] -translate-x-1/2 border border-[#D9E1DB] border-t-2 border-t-[#244C3B] bg-white p-2 shadow-[0_16px_30px_rgba(23,33,29,0.12)]">
+              <div className="px-3 pb-2 pt-1 text-[11px] font-bold uppercase tracking-[0.14em] text-[#849188]">Workspace tools</div>
+              <div className="grid grid-cols-2 gap-1">
+                <button onClick={() => { setActiveTab("group-pool"); setIsMoreOpen(false); }} className="flex min-h-[44px] items-center gap-2 px-3 text-left text-xs font-semibold text-[#617067] hover:bg-[#E8F3E9] hover:text-[#244C3B]"><Truck className="w-4 h-4" />Group Pickup</button>
+                <button onClick={() => { setActiveTab("ledger"); setIsMoreOpen(false); }} className="flex min-h-[44px] items-center gap-2 px-3 text-left text-xs font-semibold text-[#617067] hover:bg-[#E8F3E9] hover:text-[#244C3B]"><Coins className="w-4 h-4" />Ledger</button>
+                <button onClick={() => { setActiveTab("compliance"); setIsMoreOpen(false); }} className="flex min-h-[44px] items-center gap-2 px-3 text-left text-xs font-semibold text-[#617067] hover:bg-[#E8F3E9] hover:text-[#244C3B]"><Building2 className="w-4 h-4" />Recycler Portal</button>
+                <button onClick={() => { setActiveTab("whatsapp"); setIsMoreOpen(false); }} className="flex min-h-[44px] items-center gap-2 px-3 text-left text-xs font-semibold text-[#617067] hover:bg-[#E8F3E9] hover:text-[#244C3B]"><MessageSquare className="w-4 h-4" />WhatsApp</button>
+                <button onClick={() => { setActiveTab("safety"); setIsMoreOpen(false); }} className="flex min-h-[44px] items-center gap-2 px-3 text-left text-xs font-semibold text-[#617067] hover:bg-[#E8F3E9] hover:text-[#244C3B]"><ShieldCheck className="w-4 h-4" />Safety Guide</button>
+                <button onClick={() => { setActiveTab("offline-queue"); setIsMoreOpen(false); }} className="flex min-h-[44px] items-center gap-2 px-3 text-left text-xs font-semibold text-[#617067] hover:bg-[#FFF4D6] hover:text-[#8A5A00]"><WifiOff className="w-4 h-4" />Offline Queue</button>
+                {(persona === "admin" || persona === "recycler") && <button onClick={() => { setActiveTab("admin"); setIsMoreOpen(false); }} className="col-span-2 flex min-h-[44px] items-center gap-2 px-3 text-left text-xs font-semibold text-[#617067] hover:bg-[#E8F3E9] hover:text-[#244C3B]"><Database className="w-4 h-4" />CPCB Admin & Datasets</button>}
+                {(persona === "admin" || persona === "recycler") && <button onClick={() => { setActiveTab("field-research"); setIsMoreOpen(false); }} className="col-span-2 flex min-h-[44px] items-center gap-2 px-3 text-left text-xs font-semibold text-[#617067] hover:bg-[#E8F3E9] hover:text-[#244C3B]"><ClipboardList className="w-4 h-4" />Field Research</button>}
+              </div>
             </div>
           )}
         </div>
