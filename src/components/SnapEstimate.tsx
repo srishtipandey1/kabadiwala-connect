@@ -280,12 +280,12 @@ export const SnapEstimate: React.FC<SnapEstimateProps> = ({
 
   return (
     <div className="max-w-[1480px] mx-auto px-6 py-10 space-y-10">
-      <section className="valuation-hero relative isolate overflow-hidden rounded-[1.5rem] bg-[#244C3B] px-7 py-8 text-white shadow-[0_18px_42px_rgba(23,53,42,0.16)] sm:px-10 sm:py-10 lg:flex lg:items-stretch lg:px-12 lg:py-12">
+      <section className="valuation-hero relative isolate overflow-hidden rounded-[1.5rem] bg-[#244C3B] px-7 py-8 text-white shadow-[0_18px_42px_rgba(23,53,42,0.16)] sm:px-10 sm:py-10 lg:flex lg:items-center lg:px-12 lg:py-12">
         <div className="valuation-hero-image absolute inset-y-0 right-0 -z-10 bg-cover bg-center" style={{ backgroundImage: `url(${imagePreview})` }} />
         <div className="valuation-hero-overlay absolute right-0 top-0 -z-10 h-full" />
         <div className="valuation-hero-divider absolute inset-y-0 -z-10 hidden w-px bg-[#D7F06B]/40 lg:block" />
         <div className="valuation-hero-copy max-w-2xl">
-          <div className="mb-4 flex flex-wrap items-center gap-3 text-xs font-bold uppercase tracking-[0.14em] text-[#D7F06B]">
+          <div className="valuation-eyebrow mb-4 flex flex-wrap items-center gap-3 text-xs font-bold uppercase tracking-[0.14em] text-[#D7F06B]">
             <span className="inline-flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-[#D7F06B]" /> Field valuation</span>
             <span className="font-normal tracking-normal text-[#B7D0BE]">Offline-ready · benchmark guided</span>
           </div>
@@ -301,7 +301,7 @@ export const SnapEstimate: React.FC<SnapEstimateProps> = ({
             <Camera className="h-4 w-4" /> Start with a photo
           </button>
         </div>
-        <div className="mt-8 flex flex-wrap gap-2 text-xs font-semibold text-[#DCE9DF] lg:absolute lg:bottom-8 lg:right-8 lg:mt-0 lg:flex-col lg:items-end">
+        <div className="valuation-context-stack mt-8 flex flex-wrap gap-2 text-xs font-semibold text-[#DCE9DF] lg:absolute lg:bottom-8 lg:right-8 lg:mt-0 lg:flex-col lg:items-end">
           <span className="valuation-context border border-[#B7D0BE]/40 bg-[#17352A]/70 px-3 py-1.5 text-sm">{selectedMaterial.name[language]}</span>
           <span className="valuation-context border border-[#D7F06B]/50 bg-[#17352A]/80 px-3 py-1.5 text-sm text-[#D7F06B]">₹{currentRatePerKg.toLocaleString("en-IN")} / kg benchmark</span>
         </div>

@@ -36,6 +36,8 @@
   .valuation-hero { min-height: 420px; }
   .valuation-hero-copy { position: relative; z-index: 1; width: 60%; }
   .valuation-hero-image { display: none; width: 40%; opacity: 1 !important; filter: saturate(0.92) contrast(1.04); }
+  .valuation-hero-image { transform: scale(1.01); transition: transform 700ms cubic-bezier(0.2, 0.7, 0.2, 1), filter 700ms ease; }
+  .valuation-hero:hover .valuation-hero-image { transform: scale(1.045); filter: saturate(1) contrast(1.06); }
   .valuation-hero-overlay { width: 40% !important; background-color: rgba(36, 76, 59, 0.22) !important; }
   .valuation-hero-divider { right: 40% !important; }
   .valuation-hero h1 { font-weight: 650 !important; line-height: 1.08 !important; }
@@ -43,6 +45,27 @@
   .valuation-hero p { font-weight: 400 !important; }
   .valuation-hero-cta { border-radius: 11px !important; min-height: 56px !important; padding-inline: 24px !important; transition: transform 160ms ease, filter 160ms ease; }
   .valuation-hero-cta:hover { transform: translateY(-2px); filter: brightness(1.04); }
+  .valuation-eyebrow::after {
+    content: "LIVE RATE BOARD";
+    display: inline-flex;
+    align-items: center;
+    min-height: 22px;
+    margin-left: 3px;
+    padding: 0 7px;
+    border: 1px solid rgba(215, 240, 107, 0.35);
+    border-radius: 5px;
+    color: #B7D0BE;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+  }
+  .valuation-context-stack { animation: valuationFloatIn 520ms ease-out both; }
+  .material-presets button { transition: border-color 160ms ease, background-color 160ms ease, transform 160ms ease; }
+  .material-presets button:hover { transform: translateY(-1px); }
+  @keyframes valuationFloatIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
   .valuation-context { border-radius: 11px !important; backdrop-filter: none; }
   .material-presets { overflow-x: auto; flex-wrap: nowrap !important; padding-bottom: 3px; }
   .material-presets button { border-radius: 11px !important; white-space: nowrap; }
