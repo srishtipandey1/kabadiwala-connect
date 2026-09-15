@@ -1,401 +1,210 @@
 # Kabadiwala Connect
 
-> A vernacular, offline-tolerant digital bridge between informal e-waste collectors and the formal recycling ecosystem.
+### A practical digital bridge from informal collection to authorized e-waste recycling
 
-Kabadiwala Connect helps waste-pickers, scrap dealers, and local aggregators make the formal recycling route easier to understand and more rewarding. It combines fair-price discovery, material lot creation, authorized recycler matching, traceable handovers, safety guidance, and an earnings ledger in a lightweight web application designed for low-connectivity field conditions.
+Kabadiwala Connect is a vernacular, offline-tolerant platform for informal scrap collectors, aggregators, and authorized recyclers. It makes the formal route easier to choose by combining price transparency, image-assisted material identification, recycler discovery, traceable handover records, payment history, and safety guidance in one field-oriented workflow.
 
-## 1. Challenge Context
+The product is designed for the reality of a scrap shed: intermittent connectivity, entry-level Android hardware, mixed material lots, cash payments, and users who should not have to navigate a compliance portal to receive a fair price.
 
-The majority of India's end-of-life electronics reaches the recycling economy through informal collectors because they have the strongest last-mile reach and the lowest collection cost. These collectors are essential to the system, but they often remain outside the formal Extended Producer Responsibility ecosystem established by the E-Waste (Management) Rules, 2022.
+## Why this matters
 
-This gap creates several problems:
+India's informal collectors provide the last-mile reach of the e-waste economy, but often lack direct access to authorized recyclers, reliable rates, verifiable handover records, and safe processing guidance. That information and institutional gap creates room for underpayment, undocumented transactions, unsafe cable burning, acid leaching, and hazardous battery or CRT handling.
 
-- Collectors may not know the fair buying price for copper, PCBs, batteries, CRTs, motors, magnets, displays, or mixed plastics.
-- They may not know which nearby facilities are authorized to accept a particular material.
-- Handover and payment records are often informal, incomplete, or difficult to verify later.
-- Low-value or inconvenient formal handovers can push material toward unsafe backyard processing.
-- Open-air cable burning, acid leaching, uncontrolled desoldering, and unsafe battery or CRT handling expose workers and communities to serious risks.
-- Valuable elements such as lithium, cobalt, neodymium, tantalum, gallium, and indium can be lost during unsafe processing.
-
-The barrier is not only technological. It is also informational and institutional. Kabadiwala Connect is designed to make the formal channel convenient, understandable, and economically attractive without turning compliance into an additional burden for collectors.
-
-## 2. Proposed Solution
-
-The platform creates a simple digital bridge:
+Kabadiwala Connect changes the decision at the point of collection:
 
 ```text
-Collector photographs material
-        |
-        v
-Material lot + approximate weight + local price estimate
-        |
-        v
-Nearby authorized recycler matching
-        |
-        v
-Documented handover + recycler confirmation
-        |
-        v
-Payment record + earnings ledger + traceability history
+Photo + approximate weight
+        -> transparent benchmark
+        -> suitable authorized recycler
+        -> documented handover
+        -> payment and traceability record
 ```
 
-The core experience is designed around pictorial controls, large touch targets, vernacular language support, spoken guidance, offline capture, and minimal personal data collection.
+## Product surface
 
-## 3. What the Prototype Demonstrates
-
-### Collector workflow
-
-- Photograph or select a material sample.
-- Categorize lots such as CRTs, LCD/LED panels, PCBs, cables, batteries, motors, magnet-bearing assemblies, and mixed plastics.
-- Enter approximate weight and condition information.
-- Receive an instant benchmark-based value estimate.
-- Compare current and historical prices through a simple price board.
-- Find suitable recyclers by accepted material, distance, offered rate, pickup availability, and authorization status.
-- Queue a lot without connectivity and synchronize it later.
-- Generate a digital receipt with a unique reference, timestamp, location, transaction details, and SHA-256 verification code.
-- Review payments, pending dues, and completed transactions in an earnings ledger.
-
-### Recycler workflow
-
-- Review material categories and incoming lots.
-- View collector-submitted material details and estimated values.
-- Participate in a live bidding or offer workflow.
-- Review compliance-oriented receipt and handover information.
-- Maintain a recycler-side view of accepted materials, service area, pickup availability, and offered rates.
-
-### CPCB/admin workflow
-
-- Review benchmark and material datasets.
-- Inspect transaction and validation summaries.
-- Review field-research records and their evidence status.
-- Export or inspect CPCB-oriented report views.
-- Identify placeholder or pending field inputs rather than presenting them as verified research.
-
-## 4. Requirement-to-Feature Mapping
-
-| Challenge requirement | Kabadiwala Connect implementation |
+| Surface | What it enables |
 | --- | --- |
-| Photograph and categorize collected material | Snap Estimate workflow with material categories and image references |
-| Approximate weight and instant valuation | Weight input combined with seeded benchmark rates and estimate calculations |
-| Price discovery and trends | Price Guide with category rates, market ranges, quoted rates, seven-day history, and sparklines |
-| Material and transaction traceability | SQLite-backed materials, receipts, lot references, timestamps, GPS fields, and status records |
-| Authorized recycler discovery | Recycler dataset and filters for material, distance, rating, accepted materials, and pickup availability |
-| AI/ML-assisted functionality | Gemini-backed server routes for optional price/material assistance plus validation-report structures |
-| Spoken price and safety information | Voice guide helpers and language-aware safety workflows |
-| Digital handover record | Digital receipt, QR verification code, manifest reference, photo reference, and GPS fields |
-| Earnings history | Earnings Ledger with receipt, payment, and pending-status views |
-| Hazard safety guidance | Pictorial/text safety guidance for batteries, CRTs, burning, fumes, and protective equipment |
-| Hindi and Marathi support | English, Hindi, and Marathi UI controls and localized material content |
-| Offline operation | IndexedDB queue, LocalStorage fallback, simulated offline mode, and reconnect replay |
-| Entry-level Android suitability | Responsive browser UI, low-dependency client flow, and no mandatory digital payment or Aadhaar collection |
-| Cash payments | Payment method is represented as part of a receipt; UPI is optional in the prototype |
+| **Snap & Estimate** | Photograph or upload a lot, classify material, enter weight, and estimate value. |
+| **Price Guide** | Compare benchmark rate, fair range, seven-day trend, and a buyer's offer. |
+| **Best Price Auction** | Simulate competing recycler bids for a lot. |
+| **Find Recyclers** | Filter facilities by accepted material, distance, rating, authorization, and pickup. |
+| **Digital Ledger** | Review receipts, payment status, manifest reference, GPS, and QR hash. |
+| **Offline Queue** | Capture lots without connectivity and replay them when the network returns. |
+| **Safety Guide** | Provide visual, multilingual, and spoken guidance for batteries, CRTs, cables, and hazardous handling. |
+| **Recycler Portal** | Review inflow, payouts, EPR credits, CPCB-oriented reports, and fraud checks. |
+| **Admin + Field Research** | Inspect datasets, validation runs, field records, and anomaly workflows. |
 
-## 5. Structured Datasets
+The interface supports English, Hindi, and Marathi, uses large touch targets, and keeps cash payment available. Digital payment is represented in the record but is not a prerequisite for using the platform.
 
-The application is designed around datasets generated from both platform activity and field operations. The current prototype stores the operational tables in `kabadiwala.db` using `better-sqlite3`.
+## Architecture
 
-### Material Dataset
+```mermaid
+graph TD
+    Collector[Collector on Android browser] --> UI[React 19 + TypeScript UI]
+    Recycler[Recycler portal] --> UI
+    Admin[CPCB / Admin dashboard] --> UI
 
-Stored in `materials` and represented in `src/data/mockData.ts`:
+    UI --> Camera[Camera and image upload]
+    UI --> Local[(IndexedDB + LocalStorage offline queue)]
+    UI --> API[Express API on Node.js]
+    UI --> Crypto[Web Crypto SHA-256 receipt hash]
+    UI --> Speech[Browser speech guidance]
 
-- Material category and sub-category
-- Material key and description
-- Sample image reference
-- Approximate benchmark, minimum, and maximum price
-- Unit of measurement
-- Purity or condition benchmark
-- Recoverable metals
-- Hazard level
-- Seven-day price history
+    Local -->|network restored| Replay[Offline replay and receipt sync]
+    Replay --> API
 
-Example categories include copper wire, high-grade and standard PCBs, lithium-ion batteries, lead-acid batteries, CRTs, LCD/LED panels, motors, hard drives, neodymium magnets, and flame-retardant plastics.
+    API --> SQLite[(better-sqlite3 / kabadiwala.db)]
+    API --> ML[Local MobileNetV2 classifier\nPython + TensorFlow]
+    API --> Gemini[Gemini multimodal AI\noptional fallback and assistants]
 
-### Price Dataset
-
-The price dataset is represented through material benchmark records and historical price arrays. A production deployment should expand this into a time-series table containing:
-
-- Material category and sub-category
-- City, district, and service location
-- Date and time
-- Prevailing buying price
-- Selling or quoted price
-- Unit
-- Recycler or aggregator source
-- Historical observations
-- Data-quality and verification status
-
-The current price board is a seeded prototype dataset, not a live market feed. Real deployments should ingest verified recycler or aggregator quotes and retain the source and timestamp for every observation.
-
-### Recycler Dataset
-
-Stored in `recyclers`:
-
-- Recycler name and facility ID
-- Facility address and GPS coordinates
-- Materials accepted
-- Authorization or registration reference
-- CPCB certification status
-- Contact and WhatsApp details
-- Offered price bonus or rate information
-- Minimum pickup weight
-- Free pickup availability
-- Service area and distance
-- Rating and review count
-
-The repository's demo records are illustrative. Authorization references must be independently verified before operational use.
-
-### Transaction Dataset
-
-Stored in `receipts`:
-
-- Unique receipt and lot IDs
-- Collector name, phone, and collector reference
-- Material key and description
-- Approximate weight
-- Purity or condition grade
-- Quoted rate and final price
-- Recycler name and authorization reference
-- Payment method and payment status
-- Collection and creation timestamps
-- CPCB manifest reference
-- GPS latitude and longitude
-- Photograph reference
-- Transaction status
-
-### Traceability Dataset
-
-Traceability is represented through the receipt and hash fields:
-
-- Lot and handover reference
-- Photograph reference
-- Weight and material category
-- Timestamp
-- GPS coordinates
-- Recycler details
-- CPCB manifest number
-- Recycler confirmation fields
-- SHA-256 QR verification code
-- Current transaction status
-
-The client canonicalizes the receipt payload before hashing. Changing a value such as weight or final price produces a different digest and can be surfaced through the hash-audit workflow.
-
-### Collector Dataset
-
-The prototype keeps a minimal local profile:
-
-- Collector ID
-- Preferred language
-- General operating location
-- Phone number used for the local session
-- Transaction history
-- Earnings history
-
-The design intentionally avoids Aadhaar, invasive KYC, or unnecessary personal information. A production system would add explicit consent, retention rules, role-based access, and secure server-side authentication.
-
-### AI/ML Training and Validation Dataset
-
-The architecture leaves room for models that use:
-
-- Material photographs and category labels
-- Approximate weights and condition labels
-- Local buying prices and quoted offers
-- Location and service-area information
-- Completed transaction outcomes
-- Recycler matching results
-- Abnormal-price or inconsistent-transaction labels
-
-The current repository includes Gemini-backed routes and an ML validation log structure, but it does not claim to contain a production-trained classifier or a statistically representative field dataset. Before deployment, teams should document dataset source, consent, image quality, class balance, sample size, validation split, failure modes, and geographic limitations.
-
-## 6. Data Lifecycle
-
-```text
-Capture
-  -> Validate required fields
-  -> Store locally when offline
-  -> Sync when connectivity returns
-  -> Normalize and hash receipt payload
-  -> Persist transaction in SQLite
-  -> Update ledger and validation history
-  -> Use verified outcomes to improve price and matching datasets
+    ML --> Model[(material_classifier.keras)]
+    SQLite --> Ledger[Receipts, materials, recyclers, interviews, ML logs]
+    API --> Price[Benchmark rates and valuation]
+    API --> Match[Recycler matching and compliance reports]
 ```
 
-Data-quality controls should include:
+### Runtime flow
 
-- Required-field validation for material, weight, price, time, and location
-- Duplicate lot and receipt detection
-- Outlier review for abnormal quoted or final prices
-- Authorization-status verification for recycler records
-- Anonymization or pseudonymization of collector identifiers
-- Source and timestamp retention for price observations
-- Explicit labeling of pending, demo, and field-unverified records
+1. The collector captures a photo and approximate weight.
+2. Snap & Estimate calls the local trained classifier first when the model artifact is installed.
+3. The classifier returns a category and confidence; the application combines the category with its benchmark price table.
+4. Gemini remains available as a fallback for richer multimodal analysis, price reasoning, WhatsApp assistance, and safety advice.
+5. Offline lots are stored locally, then replayed to `POST /api/receipts` when connectivity returns.
+6. Receipt data is hashed, persisted in SQLite, and surfaced in the earnings ledger and recycler views.
 
-## 7. Safety and Responsible Handling
+The model identifies a category; it does not independently determine purity, final payment, safety clearance, or regulatory compliance. Those require verification.
 
-The safety module provides pictorial and language-aware guidance covering:
+## Trained ML model
 
-- Never burning cable insulation to recover copper
-- Avoiding acid leaching and uncontrolled PCB processing
-- Safe storage and handling of lithium-ion and lead-acid batteries
-- CRT implosion and leaded-glass risks
-- Respiratory, eye, hand, and fire protection
-- Handover of hazardous material to authorized facilities
+The repository contains a real transfer-learning experiment, not an augmented copy of one image per class.
 
-The objective is to make safe formal handover easier and more valuable than unsafe backyard processing.
+- **Backbone:** MobileNetV2 pretrained on ImageNet
+- **Training:** frozen feature extractor followed by low-learning-rate fine-tuning of the final 30 backbone layers
+- **Augmentation:** horizontal flip, rotation, zoom, and contrast applied only to training data
+- **Dataset:** Kaggle E Waste Image Dataset, Apache 2.0 as listed on Kaggle
+- **Split:** dataset-provided train, validation, and held-out test folders
+- **Classes:** Battery, Keyboard, Microwave, Mobile, Mouse, PCB, Player, Printer, Television, Washing Machine
+- **Images:** 2,400 train, 300 validation, 300 test
 
-## 8. Unit-Economics Hypothesis
+| Held-out test metric | Result |
+| --- | ---: |
+| Accuracy | **94.33%** |
+| Macro precision | **94.63%** |
+| Macro recall | **94.33%** |
+| Macro F1 | **94.18%** |
 
-The platform's economic model is designed around value retained and transactions enabled rather than charging collectors an access fee.
+Artifacts and evidence:
 
-| Value driver | Existing informal route | With Kabadiwala Connect |
-| --- | --- | --- |
-| Price information | Often dependent on a middleman | Transparent benchmark and recycler offers |
-| Recycler access | Personal network and travel | Ranked facilities with pickup information |
-| Record keeping | Paper, memory, or no record | Digital receipt and earnings history |
-| Payment visibility | Informal settlement risk | Recorded payment method and status |
-| Material recovery | Incentive to strip or burn | Better incentive for documented authorized handover |
+- [Training script](ml/train_material_model.py)
+- [Inference script](ml/predict_material.py)
+- [Training report](ml/artifacts/training_report.json)
+- [Dataset and license provenance](ml/SOURCES.md)
 
-A practical sustainability model could combine a small recycler-side transaction fee, enterprise or EPR reporting subscriptions, sponsored collection campaigns, and verified logistics partnerships. Collector access should remain free or near-free, and cash transactions should remain supported.
+These metrics describe performance on the published Kaggle test set. They are not a claim of accuracy on informal-sector photographs, Indian scrap-shed lighting, damaged material, or unseen device cameras. The system should use confidence thresholds and human verification before financial or safety decisions.
 
-The prototype does not claim a validated impact percentage or commercial unit economics. A field pilot should compare at least:
+## Datasets and persistence
 
-- Collector earnings per kilogram before and after platform use
-- Time and travel cost per completed handover
-- Recycler acquisition and pickup cost
-- Payment delay and failed-transaction rate
-- Platform cost per active collector
-- Revenue per completed recycler transaction
-- Share of lots routed to authorized facilities
+The application uses structured records rather than treating data as a static list.
 
-## 9. Architecture and Technology
+- **Materials:** category, descriptions, benchmark/min/max prices, hazard, recoverable metals, and price history.
+- **Prices:** material, unit, benchmark range, historical observations, and recycler context. The current values are seeded prototype benchmarks, not a live market feed.
+- **Recyclers:** facility, location, accepted materials, CPCB reference, contact details, pickup threshold, service area, and bonus rate.
+- **Transactions:** lot ID, collector, material, weight, quote, final price, recycler, timestamps, GPS, payment state, and transaction state.
+- **Traceability:** photograph reference, manifest number, handover details, QR verification hash, and subsequent status.
+- **Collectors:** minimal profile, preferred language, operating location, transaction history, and earnings history.
+- **ML validation:** sample size, accuracy, failure modes, methodology, and per-sample predictions.
 
-```text
-React 19 + TypeScript + Vite + Tailwind CSS
-        |
-        | Responsive vernacular UI
-        | IndexedDB offline queue
-        | Web Crypto SHA-256 verification
-        v
-Express server with Vite middleware
-        |
-        | Materials, prices, recyclers, receipts,
-        | field interviews, and ML validation routes
-        v
-better-sqlite3 persistent database
-```
+SQLite tables are initialized in [src/server/db.ts](src/server/db.ts). The frontend also contains clearly labeled demo seed data in [src/data/mockData.ts](src/data/mockData.ts); production deployment should consolidate these sources behind the API.
 
-Technology stack:
+## API surface
 
-- React 19
-- TypeScript 5.8
-- Vite 6
-- Tailwind CSS 4
-- Express 4
-- `better-sqlite3`
-- Google Gemini SDK (`@google/genai`)
-- IndexedDB
-- Web Crypto API
-- Lucide React icons
+| Endpoint | Purpose |
+| --- | --- |
+| `GET /api/materials` | Read persistent material records. |
+| `GET /api/prices` | Read benchmark price index. |
+| `GET /api/recyclers` | Filter authorized recycler records. |
+| `GET/POST /api/receipts` | Read and persist digital receipts. |
+| `GET /api/field-interviews` | Read field research records. |
+| `GET/POST /api/ml-validation` | Read validation history and run labeled Gemini benchmarks. |
+| `POST /api/ml/predict-material` | Run the locally trained TensorFlow classifier. |
+| `POST /api/ai/detect-material` | Gemini image classification fallback. |
+| `POST /api/ai/predict-price` | AI price sanity check and counter-offer. |
+| `POST /api/ai/match-recyclers` | Rank recycler options and estimate payout. |
+| `POST /api/ai/detect-fraud` | Flag abnormal or inconsistent transactions. |
+| `POST /api/recycler/generate-compliance-report` | Generate CPCB-oriented report data. |
+| `POST /api/ai/whatsapp-chat` | Multilingual scrap assistant. |
+| `POST /api/ai/safety-advice` | Multilingual hazard and PPE guidance. |
 
-## 10. Run Locally
+## Run locally
 
-### Prerequisites
+### Requirements
 
-- Node.js 22.5 or newer is recommended for the verified environment.
-- npm 10 or newer is recommended.
-- A Gemini API key is optional for non-AI flows.
-
-### Install
+- Node.js 22.5+
+- npm 10+
+- Python 3.11+
+- TensorFlow and scikit-learn for local ML inference/training
+- `GEMINI_API_KEY` only for Gemini-backed features
 
 ```bash
-git clone https://github.com/srishtipandey1/kabadiwala-connect.git
-cd kabadiwala-connect
 npm install
-```
-
-Create `.env` from `.env.example`:
-
-```env
-GEMINI_API_KEY=your_real_key_here
-APP_URL=http://localhost:3000
-```
-
-Do not commit `.env` or real credentials.
-
-### Development
-
-```bash
 npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000).
 
-### Production
-
-```bash
-npm run build
-npm start
-```
-
-The server initializes `kabadiwala.db` and serves the application on port `3000`.
-
-### Windows path note
-
-If the project is located in a Windows path containing `&`, npm's generated `.bin` wrappers may resolve incorrectly. The direct equivalents are:
+The folder name contains `&`, which can break npm's Windows-generated executable wrappers. When that happens, use:
 
 ```powershell
-node .\node_modules\vite\bin\vite.js build
-node .\node_modules\esbuild\bin\esbuild server.ts --bundle --platform=node --format=cjs --packages=external --sourcemap --outfile=dist/server.cjs
 node .\node_modules\typescript\bin\tsc --noEmit
-node .\dist\server.cjs
+node .\node_modules\vite\bin\vite.js build
 ```
 
-Moving the project to a path without `&` allows the standard npm scripts to run normally.
+### Train or retrain
 
-## 11. Demonstration Script
+The downloaded Kaggle dataset is already arranged at `ml/dataset/kaggle/modified-dataset`.
 
-1. Open the app without a session and confirm that `/login` appears before any dashboard content.
-2. Choose Collector, Recycler, or CPCB Admin.
-3. Use the phone and PIN form or select a clearly labeled demo account.
-4. Open Snap & Estimate and create a sample lot.
-5. Open Price Guide to compare current benchmark values and seven-day trends.
-6. Open Find Recycler to filter suitable facilities.
-7. Enable Offline Shed mode and queue a lot.
-8. Re-enable connectivity and replay the pending lot.
-9. Open Digital Bills & Ledger to inspect the receipt and payment record.
-10. Use the hash audit action to compare an original payload with a modified weight.
-11. Open Safety & Training Guide for battery, CRT, cable, and PPE guidance.
-12. Switch to Recycler or CPCB Admin to demonstrate role-specific views.
+```bash
+python ml/train_material_model.py
+```
 
-## 12. API Surface
+For a new dataset, use this structure:
 
-The Express server currently exposes routes including:
+```text
+ml/dataset/
+  train/<class-name>/*.jpg
+  val/<class-name>/*.jpg
+  test/<class-name>/*.jpg
+```
 
-- `GET /api/materials`
-- `GET /api/prices`
-- `GET /api/recyclers`
-- `GET /api/receipts`
-- `POST /api/receipts`
-- `GET /api/field-interviews`
-- `GET /api/ml-validation`
+The trainer requires at least 30 images per class and emits a model plus metrics report. Keep source, consent, class definitions, and split strategy in [ml/SOURCES.md](ml/SOURCES.md).
 
-Gemini-assisted routes require `GEMINI_API_KEY`. The rest of the prototype remains available without an API key.
+## Demonstration path
 
-## 13. Current Prototype Boundaries
+1. Sign in with a clearly labeled demo account.
+2. Open **Snap & Estimate** and upload a material image.
+3. Show the local model category and confidence, then enter approximate weight.
+4. Compare the benchmark and historical trend in **Price Guide**.
+5. Open **Find Recyclers** and show facility filtering.
+6. Enable offline mode and queue a lot.
+7. Restore connectivity and demonstrate replay into the receipt ledger.
+8. Open the receipt hash audit and show that changing weight changes the digest.
+9. Switch to **Recycler** for compliance and inflow views.
+10. Switch to **Admin** for ML validation and dataset evidence.
 
-This repository demonstrates the product workflow but is not yet a production public-service deployment. Before a live rollout, it needs:
+## Responsible-use boundaries
 
-- Real field research with consent from at least two working collectors or aggregators
-- Verified recycler authorization data and an update process
-- A production authentication and authorization service
-- Secure server-side session storage and audit controls
-- A validated material-image and price training dataset
-- Model evaluation across languages, lighting, device quality, and material conditions
-- Real payment and cash-settlement reconciliation
-- Independent legal, safety, and CPCB compliance review
-- Pilot measurement of collector earnings, adoption, safety behavior, and operating cost
+This is a working prototype and research demonstration. Before operational deployment it needs:
 
-Seeded people, prices, facilities, license references, field interviews, and locations are demo records unless independently verified. They must not be presented as official CPCB registrations or real field evidence.
+- Consent-based field collection from at least two working collectors or aggregators.
+- Independently verified recycler authorization and an update process.
+- Real price observations with source, timestamp, location, and quality status.
+- Field photographs across lighting, devices, conditions, and material mixtures.
+- Collector/facility-aware test splits to prevent image leakage.
+- Production authentication, authorization, payment reconciliation, and audit controls.
+- Safety and regulatory review before any automated recommendation is treated as authoritative.
 
-## 14. License
+Seeded people, prices, facilities, license references, field records, and locations are illustrative unless independently verified.
 
-This project is released under the [MIT License](LICENSE). The demo datasets, identities, authorization references, and field records remain illustrative and must be independently verified before operational use.
+## License and dataset attribution
+
+The application code is released under the [MIT License](LICENSE). Dataset licensing and source decisions are documented in [ml/SOURCES.md](ml/SOURCES.md). Commercial stock-photo sources without clear machine-learning training rights are not included in the training set.

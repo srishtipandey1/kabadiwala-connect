@@ -6,3 +6,9 @@ coverage/
 *.log
 .env*
 !.env.example
+ml/downloads/
+ml/dataset/
+ml/artifacts/*.keras
+ml/artifacts/best_*.keras
+ml/artifacts/
+ml/__pycache__/

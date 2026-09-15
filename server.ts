@@ -1,5 +1,9 @@
 import express from "express";
 import path from "path";
+import fs from "node:fs/promises";
+import os from "node:os";
+import { execFile } from "node:child_process";
+import { promisify } from "node:util";
 import { createServer as createViteServer } from "vite";
 import { GoogleGenAI, Type } from "@google/genai";
 import dotenv from "dotenv";
@@ -18,6 +22,7 @@ dotenv.config();
 
 const app = express();
 const PORT = 3000;
+const execFileAsync = promisify(execFile);
 
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
@@ -337,6 +342,29 @@ app.post("/api/ml-validation/run", async (req, res) => {
     });
   } catch (err: any) {
     res.status(500).json({ error: err.message });
+  }
+});
+
+// Local trained classifier inference. Gemini remains the fallback for missing artifacts.
+app.post("/api/ml/predict-material", async (req, res) => {
+  const { imageBase64 } = req.body || {};
+  const modelPath = path.join(process.cwd(), "ml", "artifacts", "material_classifier.keras");
+  if (!imageBase64 || !(await fs.stat(modelPath).catch(() => null))) {
+    return res.status(503).json({ status: "unavailable", error: "Local trained model artifact is unavailable." });
+  }
+
+  const tempPath = path.join(os.tmpdir(), `ewaste-${Date.now()}.jpg`);
+  try {
+    const cleanBase64 = imageBase64.replace(/^data:image\/[a-z]+;base64,/, "");
+    await fs.writeFile(tempPath, Buffer.from(cleanBase64, "base64"));
+    const scriptPath = path.join(process.cwd(), "ml", "predict_material.py");
+    const { stdout } = await execFileAsync("python", [scriptPath, modelPath, tempPath], { maxBuffer: 1024 * 1024 });
+    res.json({ status: "success", analysis: JSON.parse(stdout.trim()) });
+  } catch (error: any) {
+    console.error("Local ML inference error:", error);
+    res.status(503).json({ status: "unavailable", error: "Local model inference failed." });
+  } finally {
+    await fs.unlink(tempPath).catch(() => undefined);
   }
 });
 

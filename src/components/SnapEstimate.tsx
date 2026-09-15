@@ -144,6 +144,55 @@ export const SnapEstimate: React.FC<SnapEstimateProps> = ({
     }
 
     try {
+      // Prefer the locally trained classifier when the model artifact is installed.
+      try {
+        const localRes = await fetch("/api/ml/predict-material", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ imageBase64: base64Image }),
+        });
+        const localData = await localRes.json();
+        if (localData.status === "success" && localData.analysis?.detectedKey) {
+          const matched = MATERIALS_DATA.find((m) => m.key === localData.analysis.detectedKey);
+          if (matched) {
+            const localAnalysis: MaterialAnalysis = {
+              detectedKey: matched.key,
+              title: matched.name,
+              grade: matched.purityBenchmark,
+              confidenceScore: localData.analysis.confidenceScore,
+              purityPercent: 0,
+              estimatedRatePerKg: matched.fairPrice,
+              estimatedWeightKg: weightKg,
+              totalEstimatedValueInr: Math.round(matched.fairPrice * weightKg),
+              hazardLevel: matched.hazardLevel,
+              safetyWarning: {
+                en: "Verify condition and purity manually before accepting a final price.",
+                hi: "अंतिम कीमत स्वीकार करने से पहले स्थिति और शुद्धता की जांच करें।",
+                mr: "अंतिम भाव स्वीकारण्यापूर्वी स्थिती आणि शुद्धता तपासा.",
+              },
+              valueMaximizationTip: {
+                en: "Separate and weigh this category independently to improve price transparency.",
+                hi: "बेहतर मूल्य पारदर्शिता के लिए इस श्रेणी को अलग करके तौलें।",
+                mr: "चांगल्या भावासाठी ही श्रेणी वेगळी करून वजन करा.",
+              },
+              recoverableMetals: matched.recoverableMetals,
+              recyclerDemandIndex: "Model classification",
+            };
+            setAiResult(localAnalysis);
+            setSelectedMaterial(matched);
+            if (soundEnabled) {
+              AudioGuideEngine.speak(
+                language === "hi" ? `स्थानीय मॉडल ने ${matched.name.hi} पहचाना।` : `Local model identified ${matched.name.en}.`,
+                language
+              );
+            }
+            return;
+          }
+        }
+      } catch (localError) {
+        console.warn("Local model unavailable, falling back to Gemini:", localError);
+      }
+
       const res = await fetch("/api/ai/detect-material", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
