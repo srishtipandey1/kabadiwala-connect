@@ -719,7 +719,7 @@ export default function App() {
       <footer className="mt-10 border-t border-[#D9E1DB] bg-[#17352A] px-4 py-8 text-[#DCE9DF] sm:px-6">
         <div className="mx-auto grid max-w-7xl gap-6 sm:grid-cols-[1.4fr_1fr_1fr] sm:items-end">
           <div>
-            <div className="mb-2 flex items-center gap-3"><span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#D7F06B]">KC</span><span className="h-px w-8 bg-[#D7F06B]" /><span className="font-bold text-white">Kabadiwala Connect</span></div>
+            <div className="mb-2 border-l-2 border-[#D7F06B] pl-3 font-bold text-white">Kabadiwala Connect</div>
             <p className="max-w-md text-sm leading-6 text-[#B7D0BE]">A practical bridge from local collection to responsible recycling.</p>
           </div>
           <div className="text-sm"><p className="mb-2 font-bold uppercase tracking-[0.14em] text-[#D7F06B]">Built around</p><p className="text-[#DCE9DF]">Fair prices · safer handling · traceable handovers</p></div>

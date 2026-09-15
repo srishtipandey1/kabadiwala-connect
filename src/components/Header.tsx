@@ -105,19 +105,9 @@ export const Header: React.FC<HeaderProps> = ({
           className="flex items-center gap-3 cursor-pointer group shrink-0 min-h-[44px]"
           onClick={() => setActiveTab(persona === "admin" ? "admin" : persona === "recycler" ? "compliance" : "snap")}
         >
-          <div className="flex h-11 w-11 shrink-0 flex-col justify-center border-r border-[#D9E1DB] pr-3">
-            <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#244C3B]">KC</span>
-            <span className="mt-1 h-1.5 w-6 bg-[#D7F06B]" />
-          </div>
-
-          <div>
-            <div className="flex items-baseline gap-2">
-              <span className="font-black text-base sm:text-lg text-[#17211D] tracking-[-0.03em]">
-                Kabadiwala
-              </span>
-              <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#244C3B]">
-                Connect
-              </span>
+          <div className="border-l-[3px] border-[#D7F06B] pl-3">
+            <div className="font-black text-base sm:text-lg text-[#17211D] tracking-[-0.03em]">
+              Kabadiwala Connect
             </div>
             <p className="text-xs text-[#617067] hidden md:block max-w-sm truncate mt-0.5">
               Bringing the Informal Collector into the Formal Recycling Chain
