@@ -99,20 +99,20 @@ export const Header: React.FC<HeaderProps> = ({
   return (
     <header className="app-header relative z-40 select-none bg-[#F7F8F6] border-b border-[#D9E1DB]">
       {/* Row 1: Brand Logo + Compact Ticker + Utility Controls */}
-      <div className="header-top max-w-7xl mx-auto px-4 sm:px-6 py-2.5 flex items-center justify-between gap-4">
+      <div className="header-top max-w-7xl mx-auto px-4 sm:px-6 py-2 flex items-center justify-between gap-4">
         {/* Brand Logo Mark */}
         <div
           className="flex items-center gap-3 cursor-pointer group shrink-0 min-h-[44px]"
           onClick={() => setActiveTab(persona === "admin" ? "admin" : persona === "recycler" ? "compliance" : "snap")}
         >
-          <div className="header-brand-lockup border-l-[3px] border-[#D7F06B] pl-3">
+          <div className="header-brand-lockup border-l-[2px] border-[#D7F06B] pl-3">
             <div className="flex items-center gap-2.5">
               <span className="header-brand-mark" aria-hidden="true">KC</span>
-              <div className="font-black text-base sm:text-lg text-[#17211D] tracking-[-0.03em]">
+              <div className="font-black text-base sm:text-lg text-[#17211D] tracking-[-0.02em]">
                 Kabadiwala Connect
               </div>
             </div>
-            <p className="text-xs text-[#617067] hidden md:block max-w-sm truncate mt-0.5">
+            <p className="text-xs text-[#617067] hidden md:block max-w-sm truncate mt-0.5 leading-4">
               Bringing the Informal Collector into the Formal Recycling Chain
             </p>
           </div>
@@ -237,7 +237,7 @@ export const Header: React.FC<HeaderProps> = ({
 
       {/* Row 2: Navigation Bar */}
       <div className="header-nav-row relative border-t border-[#E5E8E6] bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-start gap-1 overflow-visible py-1 no-scrollbar">
+        <div className="header-nav-inner max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-start gap-1 overflow-visible py-0.5 no-scrollbar">
           {/* Snap & Estimate */}
           <button
             onClick={() => setActiveTab("snap")}
