@@ -70,7 +70,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ language, onLanguageChange
       <div className="mx-auto grid min-h-[calc(100vh-2.5rem)] max-w-6xl overflow-hidden rounded-[2rem] bg-[#F7F8F6] shadow-2xl lg:grid-cols-[0.8fr_1.2fr]">
         <section className="hidden bg-[#244C3B] p-10 text-white lg:flex lg:flex-col lg:justify-between">
           <div>
-            <div className="mb-10 flex items-center gap-3"><span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#D7F06B] text-[#17352A] text-[15px] font-black tracking-[-0.12em]">KC</span><span className="text-sm font-bold uppercase tracking-[0.18em]">CPCB Network</span></div>
+            <div className="mb-10 flex items-center gap-3"><span className="text-xs font-bold uppercase tracking-[0.18em] text-[#D7F06B]">KC</span><span className="h-px w-8 bg-[#D7F06B]" /><span className="text-sm font-bold uppercase tracking-[0.18em]">CPCB Network</span></div>
             <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-[#D7F06B]">{copy.title}</p>
             <h1 className="max-w-sm text-5xl font-bold leading-[1.05]">Fair value for every responsible handover.</h1>
             <p className="mt-6 max-w-sm text-base leading-7 text-[#DCE9DF]">{copy.subtitle}. Use a phone and PIN to enter the tools for your role.</p>
@@ -80,7 +80,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ language, onLanguageChange
 
         <section className="p-5 sm:p-8 lg:p-12">
           <div className="mb-7 flex items-start justify-between gap-4">
-            <div><div className="mb-3 flex items-center gap-2 lg:hidden"><span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#D7F06B] text-[#17352A] text-xs font-black tracking-[-0.12em]">KC</span><span className="text-xs font-bold uppercase tracking-[0.16em] text-[#244C3B]">CPCB Network</span></div><h2 className="text-2xl font-bold sm:text-3xl">{copy.title}</h2><p className="mt-1 text-sm text-[#617067]">{copy.subtitle}</p></div>
+            <div><div className="mb-3 flex items-center gap-2 lg:hidden"><span className="text-xs font-bold uppercase tracking-[0.16em] text-[#244C3B]">KC</span><span className="h-px w-6 bg-[#D7F06B]" /><span className="text-xs font-bold uppercase tracking-[0.16em] text-[#244C3B]">CPCB Network</span></div><h2 className="text-2xl font-bold sm:text-3xl">{copy.title}</h2><p className="mt-1 text-sm text-[#617067]">{copy.subtitle}</p></div>
             <div className="flex shrink-0 rounded-xl border border-[#D9E1DB] bg-white p-1 text-xs font-bold"><button className={`rounded-lg px-2.5 py-2 ${language === "en" ? "bg-[#244C3B] text-white" : "text-[#617067]"}`} onClick={() => onLanguageChange("en")}>EN</button><button className={`rounded-lg px-2.5 py-2 ${language === "hi" ? "bg-[#244C3B] text-white" : "text-[#617067]"}`} onClick={() => onLanguageChange("hi")}>हिं</button><button className={`rounded-lg px-2.5 py-2 ${language === "mr" ? "bg-[#244C3B] text-white" : "text-[#617067]"}`} onClick={() => onLanguageChange("mr")}>मर</button></div>
           </div>
 
