@@ -55,7 +55,7 @@ graph TD
 
     API --> SQLite[(better-sqlite3 / kabadiwala.db)]
     API --> ML[Local MobileNetV2 classifier\nPython + TensorFlow]
-    API --> Gemini[Gemini multimodal AI\noptional fallback and assistants]
+    API --> Vision[Multimodal vision service\noptional fallback and assistants]
 
     ML --> Model[(material_classifier.keras)]
     SQLite --> Ledger[Receipts, materials, recyclers, interviews, ML logs]
@@ -68,7 +68,7 @@ graph TD
 1. The collector captures a photo and approximate weight.
 2. Snap & Estimate calls the local trained classifier first when the model artifact is installed.
 3. The classifier returns a category and confidence; the application combines the category with its benchmark price table.
-4. Gemini remains available as a fallback for richer multimodal analysis, price reasoning, WhatsApp assistance, and safety advice.
+4. An optional multimodal vision service remains available for richer analysis, price reasoning, WhatsApp assistance, and safety advice.
 5. Offline lots are stored locally, then replayed to `POST /api/receipts` when connectivity returns.
 6. Receipt data is hashed, persisted in SQLite, and surfaced in the earnings ledger and recycler views.
 
@@ -125,9 +125,9 @@ SQLite tables are initialized in [src/server/db.ts](src/server/db.ts). The front
 | `GET /api/recyclers` | Filter authorized recycler records. |
 | `GET/POST /api/receipts` | Read and persist digital receipts. |
 | `GET/POST /api/field-interviews` | Read and persist field research records. |
-| `GET/POST /api/ml-validation` | Read validation history and run labeled Gemini benchmarks. |
+| `GET/POST /api/ml-validation` | Read validation history and run labeled vision benchmarks. |
 | `POST /api/ml/predict-material` | Run the locally trained TensorFlow classifier. |
-| `POST /api/ai/detect-material` | Gemini image classification fallback. |
+| `POST /api/ai/detect-material` | Multimodal image classification fallback. |
 | `POST /api/ai/predict-price` | AI price sanity check and counter-offer. |
 | `POST /api/ai/match-recyclers` | Rank recycler options and estimate payout. |
 | `POST /api/ai/detect-fraud` | Flag abnormal or inconsistent transactions. |
@@ -143,7 +143,7 @@ SQLite tables are initialized in [src/server/db.ts](src/server/db.ts). The front
 - npm 10+
 - Python 3.11+
 - TensorFlow and scikit-learn for local ML inference/training
-- `GEMINI_API_KEY` only for Gemini-backed features
+- Optional provider credentials for enhanced vision and assistant features
 
 ```bash
 npm install

@@ -29,7 +29,7 @@ image leakage. Do not use predictions alone for payment, safety, or compliance.
 
 When `ml/artifacts/material_classifier.keras` exists, Snap Estimate calls
 `POST /api/ml/predict-material` first. The Express route invokes
-`ml/predict_material.py`; if the local model is unavailable, the existing Gemini
-vision route remains the fallback. The local classifier supplies category and
+`ml/predict_material.py`; if the local model is unavailable, the configured
+multimodal vision route remains the fallback. The local classifier supplies category and
 confidence, while the application continues to use its benchmark price table
 for valuation and requires manual verification of condition and purity.
