@@ -312,7 +312,7 @@ app.post("/api/ml-validation/run", async (req, res) => {
           const cleanBase64 = sample.imageBase64.replace(/^data:image\/[a-z]+;base64,/, "");
           const prompt = `Identify exact material category key from: ["copper-wire", "motherboard-high", "motherboard-mid", "low-grade-pcb", "lithium-ion-battery", "lead-acid-battery", "smps-power-supply", "copper-transformer", "aluminum-heatsink", "brass-connectors", "mobile-phone-mixed", "crt-monitor", "hard-drive-hdd", "lcd-led-display", "electric-copper-motor", "neodymium-magnets", "flame-retardant-plastics"]. Return JSON: {"detectedKey": string}`;
           const response = await ai.models.generateContent({
-            model: "gemini-3.7-flash",
+            model: "gemini-2.5-flash",
             contents: {
               parts: [{ inlineData: { mimeType: "image/jpeg", data: cleanBase64 } }, { text: prompt }],
             },
@@ -421,7 +421,7 @@ Return strictly valid JSON matching this schema:
 }`;
 
     const response = await ai.models.generateContent({
-      model: "gemini-3.7-flash",
+      model: "gemini-2.5-flash",
       contents: {
         parts: [
           {
@@ -462,7 +462,7 @@ Return strictly valid JSON matching this schema:
     console.error("AI Material Detection Error:", error);
     res.status(503).json({
       status: "unavailable",
-      error: "Material analysis is temporarily unavailable. Add the trained model artifact or configure GEMINI_API_KEY, then retry.",
+      error: "Material analysis is temporarily unavailable. Please try again with a clearer photo.",
     });
   }
 });
@@ -513,7 +513,7 @@ Return valid JSON schema:
 }`;
 
     const response = await ai.models.generateContent({
-      model: "gemini-3.7-flash",
+      model: "gemini-2.5-flash",
       contents: prompt,
       config: {
         responseMimeType: "application/json",
@@ -586,7 +586,7 @@ Return valid JSON schema:
 }`;
 
     const response = await ai.models.generateContent({
-      model: "gemini-3.7-flash",
+      model: "gemini-2.5-flash",
       contents: prompt,
       config: {
         responseMimeType: "application/json",
@@ -686,7 +686,7 @@ Return valid JSON schema:
 }`;
 
     const response = await ai.models.generateContent({
-      model: "gemini-3.7-flash",
+      model: "gemini-2.5-flash",
       contents: prompt,
       config: {
         responseMimeType: "application/json",
@@ -821,7 +821,7 @@ Guidelines:
     });
 
     const response = await ai.models.generateContent({
-      model: "gemini-3.7-flash",
+      model: "gemini-2.5-flash",
       contents: { parts },
       config: {
         systemInstruction,
@@ -876,7 +876,7 @@ Return strictly valid JSON matching this schema:
 }`;
 
     const response = await ai.models.generateContent({
-      model: "gemini-3.7-flash",
+      model: "gemini-2.5-flash",
       contents: prompt,
       config: {
         responseMimeType: "application/json",

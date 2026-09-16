@@ -205,10 +205,10 @@ export const SnapEstimate: React.FC<SnapEstimateProps> = ({
         console.warn("Local model fallback unavailable:", localError);
       }
 
-      setAnalysisError("Gemini could not identify this image. Check GEMINI_API_KEY and retry with a clearer photo.");
+      setAnalysisError("We couldn't recognize this photo yet. Try a closer, well-lit image of one material.");
     } catch (err) {
       console.error("AI Analysis error:", err);
-      setAnalysisError("Material analysis is unavailable. Check the model/API setup and try again.");
+      setAnalysisError("We couldn't recognize this photo yet. Try a closer, well-lit image of one material.");
     } finally {
       setIsScanningAI(false);
     }
