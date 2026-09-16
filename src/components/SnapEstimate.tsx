@@ -59,6 +59,7 @@ export const SnapEstimate: React.FC<SnapEstimateProps> = ({
   const [imagePreview, setImagePreview] = useState<string>(MATERIALS_DATA[0].sampleImage);
   const [isScanningAI, setIsScanningAI] = useState<boolean>(false);
   const [aiResult, setAiResult] = useState<MaterialAnalysis | null>(null);
+  const [analysisError, setAnalysisError] = useState<string | null>(null);
   const [cameraActive, setCameraActive] = useState<boolean>(false);
   const [offlineQueuedSuccess, setOfflineQueuedSuccess] = useState<boolean>(false);
 
@@ -129,6 +130,7 @@ export const SnapEstimate: React.FC<SnapEstimateProps> = ({
 
   const runAiAnalysis = async (base64Image: string) => {
     setIsScanningAI(true);
+    setAnalysisError(null);
     if (!effectiveOnline) {
       setTimeout(() => {
         setIsScanningAI(false);
@@ -219,9 +221,12 @@ export const SnapEstimate: React.FC<SnapEstimateProps> = ({
               : `AI identified ${data.analysis.title?.en || "E-Waste"}. Spot rate is ₹${data.analysis.estimatedRatePerKg} per kilogram.`;
           AudioGuideEngine.speak(speechMsg, language);
         }
+      } else {
+        setAnalysisError(data.error || "Material analysis is unavailable. Please retry with a clearer photo.");
       }
     } catch (err) {
       console.error("AI Analysis error:", err);
+      setAnalysisError("Material analysis is unavailable. Check the model/API setup and try again.");
     } finally {
       setIsScanningAI(false);
     }
@@ -384,6 +389,12 @@ export const SnapEstimate: React.FC<SnapEstimateProps> = ({
                     <Sparkles className="w-8 h-8 text-[#1E5128] animate-spin mb-3" />
                     <p className="text-base font-semibold">Gemini AI Inspecting Lot...</p>
                     <p className="text-xs text-[#8A93A0] mt-1">Assessing purity, grade & hazard risks</p>
+                  </div>
+                )}
+                {analysisError && !isScanningAI && (
+                  <div className="absolute inset-x-4 bottom-4 rounded-xl border border-amber-200 bg-[#FFFBEB] px-4 py-3 text-sm text-amber-900 shadow-sm">
+                    <div className="font-semibold">Could not classify this image</div>
+                    <p className="mt-1 text-xs leading-relaxed">{analysisError}</p>
                   </div>
                 )}
                 <div className="absolute top-3 right-3">

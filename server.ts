@@ -441,9 +441,12 @@ Return strictly valid JSON matching this schema:
     const responseText = response.text || "{}";
     const parsed = JSON.parse(responseText);
 
-    // Fallback safeguard if key not recognized
+    // Never silently turn an unknown result into a PCB classification.
     if (!parsed.detectedKey || !MATERIAL_PRICE_INDEX[parsed.detectedKey]) {
-      parsed.detectedKey = "motherboard-mid";
+      return res.status(502).json({
+        status: "unavailable",
+        error: "The vision model returned an unsupported material category. Please retry with a clearer photo.",
+      });
     }
 
     const standardRate = MATERIAL_PRICE_INDEX[parsed.detectedKey]?.fair || 500;
@@ -457,36 +460,9 @@ Return strictly valid JSON matching this schema:
     });
   } catch (error: any) {
     console.error("AI Material Detection Error:", error);
-    // Return structured graceful fallback
-    res.json({
-      status: "fallback",
-      analysis: {
-        detectedKey: "motherboard-mid",
-        title: {
-          en: "Mixed Electronic Circuit Boards (PCBs)",
-          hi: "इलेक्ट्रॉनिक सर्किट बोर्ड (पीसीबी)",
-          mr: "इलेक्ट्रॉनिक सर्किट बोर्ड (पीसीबी)",
-        },
-        grade: "Standard Grade-B Mixed Board",
-        confidenceScore: 0.88,
-        purityPercent: 75,
-        estimatedRatePerKg: 450,
-        estimatedWeightKg: req.body.userWeightKg ? parseFloat(req.body.userWeightKg) : 5,
-        totalEstimatedValueInr: Math.round(450 * (req.body.userWeightKg ? parseFloat(req.body.userWeightKg) : 5)),
-        hazardLevel: "MEDIUM",
-        safetyWarning: {
-          en: "Wear cut-resistant gloves. Do not break or burn boards to avoid toxic lead solder fumes.",
-          hi: "कट-प्रतिरोधी दस्ताने पहनें। जहरीले धुएं से बचने के लिए बोर्ड को जलाएं नहीं।",
-          mr: "कट-प्रतिरोधक हातमोजे वापरा. विषारी धूर टाळण्यासाठी बोर्ड जाळू नका.",
-        },
-        valueMaximizationTip: {
-          en: "Keep server boards with gold pins separated from regular appliance brown boards for 4x higher payout.",
-          hi: "सोने की पिन वाले सर्वर बोर्ड को अलग रखें ताकि 4 गुना ज्यादा कीमत मिल सके।",
-          mr: "सोनेरी पिन असलेले सर्व्हर बोर्ड वेगळे ठेवा जेणेकरून 4 पट अधिक भाव मिळेल.",
-        },
-        recoverableMetals: ["Copper", "Tin", "Gold Trace", "Silver"],
-        recyclerDemandIndex: "High Demand",
-      },
+    res.status(503).json({
+      status: "unavailable",
+      error: "Material analysis is temporarily unavailable. Add the trained model artifact or configure GEMINI_API_KEY, then retry.",
     });
   }
 });
