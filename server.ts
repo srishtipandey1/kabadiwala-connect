@@ -312,7 +312,7 @@ app.post("/api/ml-validation/run", async (req, res) => {
           const cleanBase64 = sample.imageBase64.replace(/^data:image\/[a-z]+;base64,/, "");
           const prompt = `Identify exact material category key from: ["copper-wire", "motherboard-high", "motherboard-mid", "low-grade-pcb", "lithium-ion-battery", "lead-acid-battery", "smps-power-supply", "copper-transformer", "aluminum-heatsink", "brass-connectors", "mobile-phone-mixed", "crt-monitor", "hard-drive-hdd", "lcd-led-display", "electric-copper-motor", "neodymium-magnets", "flame-retardant-plastics"]. Return JSON: {"detectedKey": string}`;
           const response = await ai.models.generateContent({
-            model: "gemini-2.5-flash",
+            model: "gemini-3.6-flash",
             contents: {
               parts: [{ inlineData: { mimeType: "image/jpeg", data: cleanBase64 } }, { text: prompt }],
             },
@@ -420,25 +420,38 @@ Return strictly valid JSON matching this schema:
   "recyclerDemandIndex": "High Demand" | "Moderate Demand" | "Specialized"
 }`;
 
-    const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
-      contents: {
-        parts: [
-          {
-            inlineData: {
-              mimeType: mimeType || "image/jpeg",
-              data: cleanBase64,
-            },
+    let response;
+    for (let attempt = 0; attempt < 2; attempt += 1) {
+      try {
+        response = await ai.models.generateContent({
+          model: "gemini-3.6-flash",
+          contents: {
+            parts: [
+              {
+                inlineData: {
+                  mimeType: mimeType || "image/jpeg",
+                  data: cleanBase64,
+                },
+              },
+              { text: prompt },
+            ],
           },
-          { text: prompt },
-        ],
-      },
-      config: {
-        responseMimeType: "application/json",
-      },
-    });
+          config: {
+            responseMimeType: "application/json",
+          },
+        });
+        break;
+      } catch (error: any) {
+        const status = Number(error?.status || error?.error?.code);
+        if (attempt === 0 && (status === 429 || status === 503)) {
+          await new Promise((resolve) => setTimeout(resolve, 800));
+          continue;
+        }
+        throw error;
+      }
+    }
 
-    const responseText = response.text || "{}";
+    const responseText = response?.text || "{}";
     const parsed = JSON.parse(responseText);
 
     // Never silently turn an unknown result into a PCB classification.
@@ -513,7 +526,7 @@ Return valid JSON schema:
 }`;
 
     const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
+      model: "gemini-3.6-flash",
       contents: prompt,
       config: {
         responseMimeType: "application/json",
@@ -586,7 +599,7 @@ Return valid JSON schema:
 }`;
 
     const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
+      model: "gemini-3.6-flash",
       contents: prompt,
       config: {
         responseMimeType: "application/json",
@@ -686,7 +699,7 @@ Return valid JSON schema:
 }`;
 
     const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
+      model: "gemini-3.6-flash",
       contents: prompt,
       config: {
         responseMimeType: "application/json",
@@ -821,7 +834,7 @@ Guidelines:
     });
 
     const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
+      model: "gemini-3.6-flash",
       contents: { parts },
       config: {
         systemInstruction,
@@ -876,7 +889,7 @@ Return strictly valid JSON matching this schema:
 }`;
 
     const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
+      model: "gemini-3.6-flash",
       contents: prompt,
       config: {
         responseMimeType: "application/json",
