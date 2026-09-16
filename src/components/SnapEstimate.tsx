@@ -146,12 +146,25 @@ export const SnapEstimate: React.FC<SnapEstimateProps> = ({
     }
 
     try {
+      let imageForAnalysis = base64Image;
+      if (/^https?:\/\//i.test(base64Image)) {
+        const imageResponse = await fetch(base64Image);
+        if (!imageResponse.ok) throw new Error("Could not load the selected sample image");
+        const imageBlob = await imageResponse.blob();
+        imageForAnalysis = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result as string);
+          reader.onerror = () => reject(reader.error || new Error("Could not read the selected image"));
+          reader.readAsDataURL(imageBlob);
+        });
+      }
+
       // Gemini is the primary material identifier; the local classifier is a fallback.
       try {
         const geminiRes = await fetch("/api/ai/detect-material", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ imageBase64: base64Image, userWeightKg: weightKg }),
+          body: JSON.stringify({ imageBase64: imageForAnalysis, userWeightKg: weightKg }),
         });
         const geminiData = await geminiRes.json();
         if (geminiData.status === "success" && geminiData.analysis?.detectedKey) {
@@ -176,7 +189,7 @@ export const SnapEstimate: React.FC<SnapEstimateProps> = ({
         const localRes = await fetch("/api/ml/predict-material", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ imageBase64: base64Image }),
+          body: JSON.stringify({ imageBase64: imageForAnalysis }),
         });
         const localData = await localRes.json();
         if (localData.status === "success" && localData.analysis?.detectedKey) {
