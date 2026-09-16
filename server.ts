@@ -25,6 +25,34 @@ const app = express();
 const PORT = 3000;
 const execFileAsync = promisify(execFile);
 
+async function requestGroqVision(imageDataUrl: string, prompt: string): Promise<any> {
+  const apiKey = process.env.GROQ_API_KEY;
+  if (!apiKey) throw new Error("Groq provider is not configured");
+
+  const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      model: "meta-llama/llama-4-scout-17b-16e-instruct",
+      temperature: 0.1,
+      response_format: { type: "json_object" },
+      messages: [{
+        role: "user",
+        content: [
+          { type: "text", text: prompt },
+          { type: "image_url", image_url: { url: imageDataUrl } },
+        ],
+      }],
+    }),
+  });
+  if (!response.ok) throw new Error(`Groq request failed with status ${response.status}`);
+  const payload = await response.json() as any;
+  return JSON.parse(payload.choices?.[0]?.message?.content || "{}");
+}
+
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 
@@ -451,8 +479,11 @@ Return strictly valid JSON matching this schema:
       }
     }
 
-    const responseText = response?.text || "{}";
-    const parsed = JSON.parse(responseText);
+    let parsed = JSON.parse(response?.text || "{}");
+
+    if (!parsed.detectedKey && process.env.GROQ_API_KEY) {
+      parsed = await requestGroqVision(`data:${mimeType || "image/jpeg"};base64,${cleanBase64}`, prompt);
+    }
 
     // Never silently turn an unknown result into a PCB classification.
     if (!parsed.detectedKey || !MATERIAL_PRICE_INDEX[parsed.detectedKey]) {
@@ -472,6 +503,23 @@ Return strictly valid JSON matching this schema:
       analysis: parsed,
     });
   } catch (error: any) {
+    if (process.env.GROQ_API_KEY) {
+      try {
+        const groqImage = String(req.body.imageBase64 || "").replace(/^data:image\/[a-z]+;base64,/, "");
+        const groqPrompt = `Identify the closest e-waste material category from ["copper-wire", "motherboard-high", "motherboard-mid", "low-grade-pcb", "lithium-ion-battery", "lead-acid-battery", "smps-power-supply", "copper-transformer", "aluminum-heatsink", "brass-connectors", "mobile-phone-mixed", "crt-monitor", "hard-drive-hdd", "lcd-led-display", "electric-copper-motor", "neodymium-magnets", "flame-retardant-plastics"]. Return JSON with detectedKey, title {en,hi,mr}, grade, confidenceScore, purityPercent, estimatedRatePerKg, estimatedWeightKg, totalEstimatedValueInr, hazardLevel, safetyWarning {en,hi,mr}, valueMaximizationTip {en,hi,mr}, recoverableMetals, recyclerDemandIndex.`;
+        const groqParsed = await requestGroqVision(`data:${req.body.mimeType || "image/jpeg"};base64,${groqImage}`, groqPrompt);
+        if (groqParsed.detectedKey && MATERIAL_PRICE_INDEX[groqParsed.detectedKey]) {
+          const standardRate = MATERIAL_PRICE_INDEX[groqParsed.detectedKey].fair;
+          const finalRate = groqParsed.estimatedRatePerKg || standardRate;
+          const userWeightKg = req.body.userWeightKg;
+          const weight = groqParsed.estimatedWeightKg || (userWeightKg ? parseFloat(userWeightKg) : 5);
+          groqParsed.totalEstimatedValueInr = Math.round(finalRate * weight);
+          return res.json({ status: "success", provider: "groq", analysis: groqParsed });
+        }
+      } catch (groqError) {
+        console.error("Groq material detection fallback failed:", groqError);
+      }
+    }
     console.error("AI Material Detection Error:", error);
     res.status(503).json({
       status: "unavailable",
